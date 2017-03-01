@@ -12,7 +12,7 @@ body {
   font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
 }
 hr {
-  border-color: #F05F40;
+  border-color: #FFFFFF;
   border-width: 3px;
   max-width: 50px;
 }
@@ -23,7 +23,7 @@ a {
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
-  color: #F05F40;
+  color: #FFFFFF;
 }
 a:hover,
 a:focus {
@@ -43,7 +43,7 @@ p {
   margin-bottom: 20px;
 }
 .bg-primary {
-  background-color: #F05F40;
+  background-color: #222222;
 }
 .bg-dark {
   background-color: #222222;
@@ -70,7 +70,7 @@ aside {
   transition: all 0.35s;
 }
 .navbar-default .navbar-header .navbar-brand {
-  color: #F05F40;
+  color: #FFFFFF;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 700;
   text-transform: uppercase;
@@ -82,7 +82,7 @@ aside {
 .navbar-default .navbar-header .navbar-toggle {
   font-weight: 700;
   font-size: 12px;
-  color: #222222;
+  color: #FFFFFF;
   text-transform: uppercase;
 }
 .navbar-default .nav > li > a,
@@ -90,15 +90,15 @@ aside {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 13px;
-  color: #222222;
+  color: #FFFFFF;
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus:hover {
-  color: #F05F40;
+  color: #FFFFFF;
 }
 .navbar-default .nav > li.active > a,
 .navbar-default .nav > li.active > a:focus {
-  color: #F05F40 !important;
+  color: #FFFFFF !important;
   background-color: transparent;
 }
 .navbar-default .nav > li.active > a:hover,
@@ -130,7 +130,7 @@ aside {
     border-color: rgba(34, 34, 34, 0.05);
   }
   .navbar-default.affix .navbar-header .navbar-brand {
-    color: #F05F40;
+    color: #FFFFFF;
     font-size: 14px;
   }
   .navbar-default.affix .navbar-header .navbar-brand:hover,
@@ -143,7 +143,7 @@ aside {
   }
   .navbar-default.affix .nav > li > a:hover,
   .navbar-default.affix .nav > li > a:focus:hover {
-    color: #F05F40;
+    color: #FFFFFF;
   }
 }
 header {
@@ -162,7 +162,7 @@ header {
 header .header-content {
   position: relative;
   text-align: center;
-  padding: 100px 15px 100px;
+  padding: 50px 10px 50px;
   width: 100%;
 }
 header .header-content .header-content-inner h1 {
@@ -177,7 +177,7 @@ header .header-content .header-content-inner hr {
 }
 header .header-content .header-content-inner p {
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 16px;
   margin-bottom: 50px;
 }
@@ -191,7 +191,7 @@ header .header-content .header-content-inner p {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    padding: 0 50px;
+    padding: 0 20px;
   }
   header .header-content .header-content-inner {
     max-width: 1000px;
@@ -233,7 +233,7 @@ header .header-content .header-content-inner p {
   color: white;
   opacity: 0;
   display: block;
-  background: rgba(240, 95, 64, 0.9);
+  background: rgba(0, 0, 0, 0.9);
   position: absolute;
   bottom: 0;
   text-align: center;
@@ -253,7 +253,7 @@ header .header-content .header-content-inner p {
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category,
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
-  padding: 0 15px;
+  padding: 0 8px;
 }
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
   text-transform: uppercase;
@@ -281,14 +281,14 @@ header .header-content .header-content-inner p {
   margin: 0 auto 20px;
 }
 .text-primary {
-  color: #F05F40;
+  color: #22222;
 }
 .no-gutter > [class*='col-'] {
   padding-right: 0;
   padding-left: 0;
 }
 .btn-default {
-  color: #222222;
+  color: #FFFFFF;
   background-color: white;
   border-color: white;
   -webkit-transition: all 0.35s;
@@ -337,8 +337,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: white;
-  background-color: #F05F40;
-  border-color: #F05F40;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
@@ -350,8 +350,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: white;
-  background-color: #ee4b28;
-  border-color: #ed431f;
+  background-color: #222222;
+  border-color: #222222;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -376,11 +376,11 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-  background-color: #F05F40;
-  border-color: #F05F40;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
 }
 .btn-primary .badge {
-  color: #F05F40;
+  color: #FFFFFF;
   background-color: white;
 }
 .btn {

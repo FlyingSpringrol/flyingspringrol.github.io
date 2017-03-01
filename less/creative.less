@@ -25,9 +25,9 @@ hr.light {
 a {
     .transition-all;
     color: @theme-primary;
-    &:hover,
+    #&:hover,
     &:focus {
-        color: darken(@theme-primary, 10%);
+        color: darken(@theme-primary, 100%);
     }
 }
 
@@ -313,11 +313,11 @@ header {
 
 // Button Styles
 .btn-default {
-    .button-variant(@gray-darker;white;white);
+    .button-variant(@gray-darker;black;black);
 }
 
 .btn-primary {
-    .button-variant(white;@theme-primary;@theme-primary);
+    .button-variant(black;@theme-primary;@theme-primary);
 }
 
 .btn {

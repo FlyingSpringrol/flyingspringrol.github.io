@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>The Life Of Brian</title>
+    <title>Creative - Start Bootstrap Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -18,12 +18,12 @@
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <script src = 'visualizer3.js'></script>
+
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
     <!-- Theme CSS -->
-    <link href="css/creative.min.css" rel="stylesheet">
+    <link href="css/creative.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,214 +36,20 @@
 
 <body id="page-top">
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Symmetry</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <h4></h4>
-                            <h1><br>My name is brian aronowitz.</h1>
-                            <p><br> I am an aspiring computer scientist and artist.
-                            <br> Click the nodes to learn more about me and the projects I'm involved in.</p>
-                            <canvas height = 200px width = 800px id = "canvas1"> </canvas>
-                            <script>
-                                     var canvas = document.getElementById('canvas1');
-
-                                     var nodeCount = 5;
-                                     var timeCount = 0; //used for mouseOver method
-                                     var visualizer = new Visualizer(nodeCount, canvas);
-                                     var openWriting = function(){
-                                        window.location = "http://www.brianthinkingthoughts.blogspot.com";
-                                     }
-                                     var openPantheon = function(){
-                                        window.location = "http://pantheonvr.com/";
-                                     }
-                                     var openMemorease = function(){
-                                        window.location = "https://www.youtube.com/watch?v=MzsP0DX4ff0&list=PLtVGXnbLK5Zu5fkdrlnleagFg8okJtPhe";
-                                     }
-                                     var openGitHub = function(){
-                                        window.location = "https://github.com/FlyingSpringrol";
-                                     }
-                                     var openLinkedIn = function(){
-                                        window.location = "https://www.linkedin.com/in/brian-aronowitz";
-                                     }
-
-                                     visualizer.nodes[0].text = "LinkedIn";
-                                     visualizer.nodes[1].text = "Pantheon";
-                                     visualizer.nodes[2].text = "VrCells";
-                                     visualizer.nodes[3].text = "Writing";
-                                     visualizer.nodes[4].text = "Github";
-
-                                     visualizer.nodes[0].toFollow = openLinkedIn;
-                                     visualizer.nodes[1].toFollow = openPantheon;
-                                     visualizer.nodes[2].toFollow = openMemorease;
-                                     visualizer.nodes[3].toFollow = openWriting;
-                                     visualizer.nodes[4].toFollow = openGitHub;
-
-                                     visualizer.nodes[0].color = "rgb(227, 99, 97)";
-                                     visualizer.nodes[1].color = "rgb(204, 172, 98)";
-                                     visualizer.nodes[2].color = "rgb(154, 227, 120)";
-                                     visualizer.nodes[3].color = "rgb(87, 188, 204)";
-                                     visualizer.nodes[4].color = "rgb(159, 100, 227)";
-
-                                     var update = function(){
-                                        visualizer.update();
-                                        visualizer.render();
-                                        window.requestAnimationFrame(update);
-                                     }
-                                     window.requestAnimationFrame(update);
-
-                                     document.addEventListener('mousedown', function(evt){
-                                        var point = calculateOffset(canvas, evt.clientX, evt.clientY);
-                                        var isOver = overNode(point.x, point.y);
-                                        if (isOver == 1){
-                                          targetNode.toFollow();
-                                        }
-                                        if (running){
-                                          //prevent breaking
-                                          return;
-                                        }
-
-                                        if (isOver == 0 && !running){
-                                           //if overnode and other node not running, open node
-                                           expKey = requestAnimationFrame(expandNode);
-                                        }
-                                     });
-                                     document.addEventListener('mousemove', function(evt){
-
-                                     });
-
-                                     document.addEventListener('keydown', function(evt){
-
-                                     });
-
-                                     //expand functions
-                                     var expandCount =  0;
-                                     var contractCount = 0;
-                                     var maxCount = 100;
-                                     var targetNode = null;
-                                     var expKey;
-                                     var conKey;
-                                     var shrinkSize = .6; //also used for expand
-                                     var opacityChange = .025;
-                                     var running;
-                                     var openable;
-                                     function expandNode(){
-                                        expandCount++;
-                                        running = true;
-                                        if (expandCount < maxCount/3){ //use to allow static size of menu
-                                           targetNode.radius = targetNode.radius + shrinkSize;
-                                           targetNode.textOpacity = targetNode.textOpacity + opacityChange;
-                                        }
-                                        else{
-                                           //do nothing, let the object be static
-                                           openable = true;
-                                        }
-                                        expKey = window.requestAnimationFrame(expandNode);
-                                        if (expandCount > maxCount){
-                                           window.cancelAnimationFrame(expKey);
-                                           expandCount = 0;
-                                           requestAnimationFrame(contractNode);
-                                        }
-                                     }
-
-                                     function contractNode(){
-                                        contractCount++;
-                                        if (contractCount < maxCount/3){ //use to allow static size of menu for a period of time
-                                           targetNode.radius = targetNode.radius - shrinkSize;
-                                           targetNode.textOpacity = targetNode.textOpacity - opacityChange;
-
-                                        }
-                                        else{
-                                           //do nothing, let the object be static
-                                        }
-
-                                        conKey = window.requestAnimationFrame(contractNode);
-
-                                        if (contractCount > maxCount){
-                                           targetNode = null;
-                                           running = false;
-                                           openable = false;
-                                            window.cancelAnimationFrame(conKey);
-                                            contractCount = 0;
-                                        }
-                                     }
-
-                                     function overNode(x, y){
-                                        var nodes = visualizer.nodes;
-
-                                        for (var i = 0; i  < nodes.length; i++){
-                                           var radius = nodes[i].radius;
-                                           var node = nodes[i];
-
-                                           if (x > node.x - radius && x < node.x + radius && y > node.y  - radius && y < node.y + radius){
-                                              if (targetNode == node){
-                                                 return 1; //special encoding, same target
-                                              }
-                                              //if a new node
-                                              if (running && targetNode != node){
-                                                 return 0;
-                                              }
-                                              if (!running){
-                                                 targetNode = node; //set target node, new node
-                                                 return 0;
-                                              }
-                                           }
-                                        }
-                                        return 2;
-                                     }
-
-                                     function calculateOffset(tarCanvas, x,y){
-                                        var rect = tarCanvas.getBoundingClientRect();
-                                        var point = {x: x-rect.left, y: y-rect.top}
-                                        return point;
-                                     }
-
-                                  </script>
-                        </div>
-                    </div>
-                </div>
+                <h1 id="homeHeading">Hello, my name is Brian.</h1>
+               <br>
+                <h5 class = "text-faded">I'm a student at UC Berkeley, studying computer science and cognitive science. I occasionally dabble in art and design. </h5>
             </div>
         </div>
     </header>
-
     <section class="bg-primary" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Currently looking for a job in Design, Software Engineering, 3d Modeling, or Animation!</h2>
-                    <hr class="light">
-                    <p class="text-faded">I'm starting at UC berkeley in the spring as a transfer student. I'm fluent in C, C#, Javascript, and Python, and have a good intuition for design and aesthetic. I have zero industry experience, but I can, and will, learn anything you put in front of me and solve any problem you give me. </p>
+               <h3 class = "section-heading"> Here's where I've been for the past two years.</h3>
                 </div>
             </div>
         </div>
@@ -258,25 +64,10 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Programming
+                                    Category
                                 </div>
                                 <div class="project-name">
-                                    Implemented a hill-climbing algorithm to approximate images.
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="imgs/mitochondria.png" class="portfolio-box">
-                        <img src="imgs/thumbnails/mitochondria.png" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    3d modeling
-                                </div>
-                                <div class="project-name">
-                                    I learned blender so I could create models of cells. This is a render of a mitochondria.
+                                    Project Name
                                 </div>
                             </div>
                         </div>
@@ -288,25 +79,10 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Programming/Machine Learning
+                                    Category
                                 </div>
                                 <div class="project-name">
-                                    Using Flask and Numpy I implemented a hopfield network. This picture shows the net (on a server), reconstructing the data and sending it back to the browser.
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="imgs/shiponclouds.png" class="portfolio-box">
-                        <img src="imgs/thumbnails/shiponclouds.png" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Art
-                                </div>
-                                <div class="project-name">
-                                    I use blender to do experimental low-poly artwork like this one.
+                                    Project Name
                                 </div>
                             </div>
                         </div>
@@ -318,70 +94,10 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Programming/Machine Learning
+                                    Category
                                 </div>
                                 <div class="project-name">
-                                    This picture is of a vanilla neural network I wrote in Javascript. It's how I learned to program.
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="imgs/synapse.png" class="portfolio-box">
-                        <img src="imgs/thumbnails/synapse.png" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    3d Modeling/Biology
-                                </div>
-                                <div class="project-name">
-                                    An artistic interpretation of a synapse. I was into neuroscience before computer science and love their intersection.
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="imgs/weird2.png" class="portfolio-box">
-                        <img src="imgs/thumbnails/weird2.png" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    3d modeling/art
-                                </div>
-                                <div class="project-name">
-                                    Just a random 30 minute piece. Working on my understanding of composition, color, and contrast.
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="imgs/lowpoly.png" class="portfolio-box">
-                        <img src="imgs/thumbnails/pantheon.png" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Programming/projects.
-                                </div>
-                                <div class="project-name">
-                                    A screenshot from Pantheon, a low-poly creation tool I'm creating with friends.
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="imgs/rbm2.png" class="portfolio-box">
-                        <img src="imgs/thumbnails/rbm2.png" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Programming/ Machine Learning
-                                </div>
-                                <div class="project-name">
-                                    This image shows the Restricted Boltzmann machine I implemented attempting to reconstruct MNIST digits.
+                                    Project Name
                                 </div>
                             </div>
                         </div>
@@ -391,22 +107,345 @@
         </div>
     </section>
 
-    <section id="contact">
+       <section class="bg-primary" id="about">
+           <div class="container">
+               <div class="row">
+                   <div class="col-lg-8 col-lg-offset-2 text-center">
+                       <h4 class="section-heading">April - May of 2015</h4>
+                       <p class="text-faded">Dropped out of UCSD and taught myself how to program. Above are some of the projects I worked on as I taught myself. I found that the best way to motivate myself to learn, was to pick interesting things in my field of study. (Neuroscience/Machine Learning). I'm happy I did it this way, I learned quite a bit about teaching myself, about how I learn, and how the internet has all the information a person would need to get up to speed and become a programmer. But more on this later, I came to a heavy realization about the depth of my knowledge later down the road... </p>
+                       <hr class="light">
+                   </div>
+               </div>
+           </div>
+       </section>
+
+    <section class="no-padding" id="portfolio">
+        <div class="container-fluid">
+            <div class="row no-gutter popup-gallery">
+                <div class="col-lg-4 col-sm-6">
+                    <a href="" class="portfolio-box">
+                        <img src="" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                           <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                           </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="rbm2.png" class="portfolio-box">
+                        <img src="imgs/thumbnails/rbm2.png" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                           <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                           </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="imgs/shiponclouds.png" class="portfolio-box">
+                        <img src="imgs/thumbnails/shiponclouds.png" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                           <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                           </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-primary" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Contact</h2>
-                    <hr class="primary">
-                    <p>If you email me I'll get back to you in the next couple days!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
-                    <p><a href="mailto:aronowb14@gmail.com">aronowb14@gmail.com</a></p>
+                    <h4 class="section-heading">May 2015 - April 2016</h4>
+                    <p class="text-faded">Went to community college in Berkeley. It was an eye-opening experience, lemme tell you that much. It kind of sucked, can't really say much else. BCC had the sound and feel of a train station, most people were just there so they could travel through to somewhere else. </p>
+                    <hr class="light">
                 </div>
             </div>
         </div>
     </section>
 
+   <section class="no-padding" id="portfolio">
+      <div class="container-fluid">
+           <div class="row no-gutter popup-gallery">
+               <div class="col-lg-4 col-sm-6">
+                   <a href="imgs/mitochondria.png" class="portfolio-box">
+                       <img src="imgs/thumbnails/mitochondria.png" class="img-responsive" alt="">
+                       <div class="portfolio-box-caption">
+                           <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                   Category
+                              </div>
+                              <div class="project-name">
+                                   Project Name
+                              </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+               <div class="col-lg-4 col-sm-6">
+                   <a href="imgs/synapse.png" class="portfolio-box">
+                       <img src="imgs/thumbnails/synapse.png" class="img-responsive" alt="">
+                       <div class="portfolio-box-caption">
+                           <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                   Category
+                              </div>
+                              <div class="project-name">
+                                   Project Name
+                              </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+               <div class="col-lg-4 col-sm-6">
+                   <a href="imgs/weird2.png" class="portfolio-box">
+                       <img src="imgs/thumbnails/weird2.png" class="img-responsive" alt="">
+                       <div class="portfolio-box-caption">
+                           <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                   Category
+                              </div>
+                              <div class="project-name">
+                                   Project Name
+                              </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+           </div>
+      </div>
+   </section>
+   <section class="bg-primary" id="about">
+     <div class="container">
+          <div class="row">
+              <div class="col-lg-8 col-lg-offset-2 text-center">
+                  <h4 class="section-heading">April 2016-June 2016</h4>
+                  <p class="text-faded">Finished up community college, and started working on a project that I'd been meaning to do for a while. Me and some friends were trying to better visualize biology using Virtual Reality technology. I went and found an Oculus, then made and textured the 3D models of cells before putting them into Unity. It was pretty cool, and I still think to this day that the best use case of VR is education. It took us about 2 months to put it all together though, and this incredible difficulty led us to think up a piece of software to make the process easier. We wanted to compress the 3d creation pipeline (3d modeling [in Blender] -> Texturing [photoshop/Quixel] -> Rendering Engine [Unity]), into a single application. So we set out to build that next. </p>
+                  <hr class="light">
+              </div>
+          </div>
+     </div>
+  </section>
+
+  <section class="no-padding" id="portfolio">
+     <div class="container-fluid">
+          <div class="row no-gutter popup-gallery">
+              <div class="col-lg-4 col-sm-6">
+                  <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
+                      <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                             <div class="project-category text-faded">
+                                  Category
+                             </div>
+                             <div class="project-name">
+                                  Project Name
+                             </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                  <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
+                      <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                             <div class="project-category text-faded">
+                                  Category
+                             </div>
+                             <div class="project-name">
+                                  Project Name
+                             </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                  <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
+                      <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                             <div class="project-category text-faded">
+                                  Category
+                             </div>
+                             <div class="project-name">
+                                  Project Name
+                             </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+     </div>
+  <section class="bg-primary" id="about">
+    <div class="container">
+         <div class="row">
+             <div class="col-lg-8 col-lg-offset-2 text-center">
+                 <h4 class="section-heading">June 2016-February 2016</h4>
+                 <p class="text-faded">We settled on a low-poly aesthetic (minimal textures, faceted edges), and called this application PantheonVR, and after about 9 months of dev time we released it on the oculus store. I was in charge of the design and content creation. I programmed much of the interface as well, and I enjoyed trying to make headway into the undefined world of VR interfaces and content. Above are some of the mockups and UI iterations, and below are some of the design studies I forced myself to do to learn Adobe Illustrator. </p>
+                 <hr class="light">
+             </div>
+         </div>
+    </div>
+</section>
+<div class="container-fluid">
+     <div class="row no-gutter popup-gallery">
+       <div class="col-lg-4 col-sm-6">
+             <a href="imgs/lowpoly.png" class="portfolio-box">
+                 <img src="imgs/thumbnails/lowpoly.png" class="img-responsive" alt="">
+                 <div class="portfolio-box-caption">
+                    <div class="portfolio-box-caption-content">
+                       <div class="project-category text-faded">
+                             Category
+                       </div>
+                       <div class="project-name">
+                             Project Name
+                       </div>
+                    </div>
+                 </div>
+             </a>
+       </div>
+       <div class="col-lg-4 col-sm-6">
+             <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
+                 <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+                 <div class="portfolio-box-caption">
+                    <div class="portfolio-box-caption-content">
+                       <div class="project-category text-faded">
+                             Category
+                       </div>
+                       <div class="project-name">
+                             Project Name
+                       </div>
+                    </div>
+                 </div>
+             </a>
+       </div>
+       <div class="col-lg-4 col-sm-6">
+             <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
+                 <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+                 <div class="portfolio-box-caption">
+                    <div class="portfolio-box-caption-content">
+                       <div class="project-category text-faded">
+                             Category
+                       </div>
+                       <div class="project-name">
+                             Project Name
+                       </div>
+                    </div>
+                 </div>
+             </a>
+       </div>
+     </div>
+</div>
+</section>
+
+      <section class="bg-primary" id="about">
+        <div class="container">
+             <div class="row">
+                 <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <hr class = "light">
+                     <h4 class="section-heading">February 2016-now</h4>
+                     <p class="text-faded">After 9 months of working on Pantheon, I made a decision to go back to school. I did it for a couple reasons, these being the start-up grind was looking to turn me into something I didn't want to be at that point in my life and I realized I needed a formal education if I was ever going to be a world class computer scientist. So yeah, here I am. I'm currently a student at UC Berkeley, studying computer science and cognitive science. If you're a potential employer reading this, I'm a bit busy right now, (currently working on a line of t-shirts to pay for my tuition and develop my design sense if you must know the truth), but if you have an amazing idea and want me to work on it with you I'm always down. Email me below. </p>
+
+                 </div>
+             </div>
+        </div>
+     </section>
+     <section class="no-padding" id="portfolio">
+        <div class="container-fluid">
+             <div class="row no-gutter popup-gallery">
+                 <div class="col-lg-4 col-sm-6">
+                     <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
+                        <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                             <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                     Category
+                                </div>
+                                <div class="project-name">
+                                     Project Name
+                                </div>
+                             </div>
+                        </div>
+                     </a>
+                 </div>
+                 <div class="col-lg-4 col-sm-6">
+                     <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
+                        <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                             <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                     Category
+                                </div>
+                                <div class="project-name">
+                                     Project Name
+                                </div>
+                             </div>
+                        </div>
+                     </a>
+                 </div>
+                 <div class="col-lg-4 col-sm-6">
+                     <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
+                        <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                             <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                     Category
+                                </div>
+                                <div class="project-name">
+                                     Project Name
+                                </div>
+                             </div>
+                        </div>
+                     </a>
+                 </div>
+             </div>
+        </div>
+     </section>
+      <section id="contact" class = "bg-primary">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-3 text-center">
+                      <i class="fa fa-phone fa-3x sr-contact" href ="checking"></i>
+                      <p><br>
+                        <a href="mailto:aronowb14@gmail.com">github</a></p>
+                  </div>
+                  <div class="col-lg-3 text-center">
+                      <i class="fa fa-envelope-o fa-3x sr-contact primary"></i>
+                      <p><br>
+                        <a href="mailto:aronowb14@gmail.com">my writing blog</a></p>
+                  </div>
+                  <div class="col-lg-3 text-center">
+                      <i class="fa fa-envelope-o fa-3x sr-contact primary"></i>
+                      <p><br>
+                        <a href="mailto:aronowb14@gmail.com">email me</a></p>
+                  </div>
+                  <div class="col-lg-3 text-center">
+                      <i class="fa fa-envelope-o fa-3x sr-contact primary"></i>
+                      <p><br>
+                        <a href="mailto:aronowb14@gmail.com">linkedIn</a></p>
+                  </div>
+              </div>
+          </div>
+      </section>
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
