@@ -13,6 +13,7 @@
 	$("section").each(function() {
 
 		var name = $(this).attr('id');
+      //return early on image sets
       if (name != "about"){
          return;
       }
@@ -30,7 +31,17 @@
 		.addTo(ctrl);
 
 	});
+   $("header").each(function() {
 
+      var name = $(this).attr('id');
+      new ScrollMagic.Scene({
+         triggerElement: this
+      })
+      .setPin(this)
+      .loglevel(3)
+      .addTo(ctrl);
+
+   });
 	new ScrollMagic.Scene({
 		duration: '20%',
 		offset: wh+(wh/2)
