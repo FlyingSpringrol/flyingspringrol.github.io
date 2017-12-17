@@ -22,6 +22,7 @@ body {
 .item:not(.prev) {visibility: visible;}
 .item.right:not(.prev) {visibility: hidden;}
 .rightest{ visibility: visible;}
+
 .image-overlay{
   color: rgba(255, 255, 255, 0);
   position: relative;
@@ -33,7 +34,9 @@ body {
     -o-transition: all 1s ease;
     -ms-transition: all 1s ease;
     transition: all 1s ease;
-    color: rgba(0, 0, 0, 1);
+    
+    /* Sets the image-text color recursively to be visible*/
+    color: rgba(255, 255, 255, 1);
 }
 .image-text{
   text-align: center;
@@ -45,7 +48,6 @@ body {
   margin-bottom:  200px;
   margin-top: 10px;
 }
-
 body {
   font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
 }
