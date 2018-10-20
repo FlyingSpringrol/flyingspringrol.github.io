@@ -27,445 +27,88 @@
 		<link rel="apple-touch-icon-precomposed" href="./favicon/coffee-cup-silhouette-optimized-57-238538.png">
 
 		<link rel="icon" href="/favicon/coffee-cup-silhouette-optimized-32-238538.png" sizes="32x32">
-
+		<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+			<style> 
+			body{
+				font-family: 'PT Serif', serif;
+				padding: 10%;
+			}
+			.blocks{
+				padding-top: 4%;
+			}
+			img{
+				width: 100px;
+				height: 100px;
+			}
+		</style>
 	</head>
+
 	<body>
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Header -->
-					<header id="header">
-						<div class="logo">
-							<span class="icon fa-coffee"></span>
-						</div>
-						<div class="content">
-							<div class="inner">
-								<h1>Brian Aronowitz</h1>
-								<p>I'm a computer scientist and artist, currently in my senior year at UC Berkeley.<br />
-								Check out the stuff I've made.</p>
-							</div>
-						</div>
-						<nav>
-							<ul>
-								<li><a href="#intro">Art</a></li>
-								<li><a href="#work">Design</a></li>
-								<li><a href="#about">Code</a></li>
-								<li><a href="#writing">Writing</a></li>
-								<li><a href="#story">About</a></li>
-								<li><a href="#contact">Contact</a></li>
-
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
-					</header>
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Intro -->
-							<article id="intro">
-								<h2 class="major">Artwork</h2>
-								<span class="image main"><img src="images/face2.png" alt="" /></span>
-								<h4>My history with art</h4>
-								<p>I started doing art about three years ago, and it's been a ride ever since. I love learning about composition, framing, color theory, and studying how other artists achieve different feelings using visual elements.
-								</p>
-								<h4>Tools</h4>
-								<p> 
-									<ul>
-									<li>Proficient with charcoal, graphite, and pen. Still learning acrylics.</li>
-									<li>Proficient with Adobe After Effects, Adobe illustrator, Adobe Premiere.</li>
-									<li>Proficient with Mudbox, ZBrush</li>
-									<li>Highly skilled with Blender, Maya, Adobe Photoshop, Unity.</li>
-									</ul>
-
-								</p>
-						<p> 
-							<a href = "https://www.facebook.com/theflyingspringrol/">My artist page.</a>
-							<a href = "https://www.youtube.com/channel/UCWvCBSOYkZFQKM6sv5dV8ww?view_as=subscriber/">My artist page.</a>
-
-						</p>
-						
-						<p> 
-							</article>
-
-							<article id="story">
-								<h2 class="major">About me</h2>
-								<span class="image main"><img src="images/me.png" alt="" /></span>
-								<h4> My meandering path</h4>
-								<p>I attended UC San Diego right after high school, where I studied neuroscience and cell biology. Towards the end of my first year, I wrote a research grant to explore the biochemical mechanisms of dreaming... a grant which immediately got rejected. Based on this, and the growing realization that neuroscience had decades to go before it answered my questions about consciousness, thought, and dreaming, I decided to drop out of school (2014-2015). In my gap year, I worked at Pottery Barn Kids, lived at my then-girlfriends mom's house, and taught myself to code during the nights (2015-2016). After a year of this, I moved to Berkeley, went to school at Berkeley city college, and started a company. (PantheonVR). We ended up getting into YCombinator, which I did for a couple months until I realized consumer VR was too early. (2016-2017). I decided to leave the company and take my acceptance as a junior transfer to UC Berkeley, where I'm currently finishing my degree in computer science. I'm set to graduate at the end of Fall 2018.</p>
-								<p>Because of on my background in neuroscience, I'm incredibly interested in human-centered design and creating things that interact intuitively and naturally with the human brain. I'm also particularly interested in VR/AR, based on that fact that a) it's so frickin cool and b) it's novel and fun to design for. I also think VR will absolutely change the way people learn in the future: the similarity to how experts can visualize and interact with their mental models is far too similar to how anyone can interact with models in VR. My interest in AR kind of grew naturally out of my development work with VR, mobileAR is essentially frictionless compared to the nightmare an Oculus is to set up.
-								</p>
-								<p>
-								I'm also extremely passionate about where technology intersects with education. I think education is the key to a world where people can understand and empathize with each other, and I think technology is a key to getting to that point. I'd be excited to work with any company or research group that's looking to work on this problem. 
-								</p>
-							</article>
-
-						<!-- Work -->
-							<article id="work">
-								<h2 class="major">Design</h2>
-
-								<h3> PengramAR (2018 work)</h3>
-								<span class="image main"><img src="images/pengramHand.png" alt="" /></span>
-								<p>Pengram is a teleoperation platform, built on Hololens and Oculus rift. I do user experience/research, 3D modeling, prototyping, and miscellaneous engineering work.
-								<br/>
-								<a href = "http://pengramar.com/">Link</a>
-								</p>
-
-								<h3> BAMPFA-AR (2018 work)</h3>
-								<span class="image main"><img src="images/bampfa.png" alt="" /></span>
-								<p>An augmented reality art experience for BAMPFA. Coming soon. </p>
-
-								<h3> Visual science (2018 work)</h3>
-								<span class="image main"><img src="images/fishCambrian.png" alt="" /></span>
-								<p> Something I've been working on for a while. Just experimenting with the lowpoly art style as a means of communicating scientific concepts. Made with Heroku and React. I'm generating the CG images using Maya (3D modeling), and Renderman (rendering), and Photoshop (touch ups and compositing.)
-								<br/> 
-								<a href = https://nameless-sierra-49419.herokuapp.com/>link to iteration 1</a>
-								<br/>
-								<a href = "https://flyingspringrol.github.io/BloomEd_Cambrian/">link to iteration 2</a>
-								</p>
-
-								<h3> PantheonVR (2016-2017 work)</h3>
-								<span class="image main"><img src="images/pantheon2.png" alt="" /></span>
-								<p>Pantheon was a 3D modeling tool for VR. Essentially the problem we were trying to solve was the difficulty of content creation for VR. A content creator has to understand the full pipeline to make anything: 3D modeling, texturing, and rendering. This entails understanding Photoshop, Quixel/Substance Painter, Maya/Blender, and Unity. We tried to compress everything into one application so someone would be able to create in VR. We ended up doing YCombinator for Winter 2017, but I left the company when I realized consumer VR idea was not ready.
-
-								<br/>
-								<a href = "http://pantheonvr.com/">Link</a>
-								</p>
-
-								<h3> Memorease (2016 work) </h3>
-								<span class="image main"><img src="images/oligo8.png" alt="" /></span>
-								<p>Memorease was designed to be a VR tool for learning. It was my first deep dive into product design and VR development. I learned Blender, Unity, Quixel, and photoshop to texture and 3D model everything. Eventually we realized it would take far to long for us to make everything in the human body, so we pivoted to start development on Pantheon.
-								<br/>
-								<a href = "https://www.youtube.com/watch?v=MzsP0DX4ff0&list=PLtVGXnbLK5Zu5fkdrlnleagFg8okJtPhe">Link</a>
-								</p>
-								<!--
-								<h3> Concept VR stuff (2016, 2017, 2018) </h3>
-								<span class="image main"><img src="images/BioMolecules.png" alt="" /></span>
-								<span class="image main"><img src="images/brainLearning.png" alt="" /></span>
-								<span class="image main"><img src="images/rhino.png" alt="" /></span>
-
-								<p> Just prototypes I make for fun. The concept art is fun, the implementation is also fun too. </p>
-								-->
-							</article>
-
-							<article id="writing">
-								<h2 class="major">Writing</h2>
-								<p>
-								<a href = "https://medium.com/@aronowb14"> Tech writing </a>
-								</p>
-								<p>
-								<a href = "http://brianaronowitz.blogspot.com/"> Creative Writing </a>
-								</p>
-
-							</article>
-
-						<!-- About -->
-							<article id="about">
-								<h2 class="major">Code</h2>
-								<h4> For fun Projects </h4>	
-								<span class="image main"><img src="images/genetic.png" alt="" /></span>
-
-								<ul>
-									<li><a href = "https://github.com/FlyingSpringrol/The-chronic">Genetic Algorithms</a></li>
-									<li><a href = "https://www.youtube.com/watch?v=ud8ED6XJPMc">Kinect Hack</a></li>
-									<li><a href = "https://www.youtube.com/watch?v=ViVUvZGZ5ww&t=1s">Watson + Oculus Hack</a></li>
-									<li><a href = "https://github.com/FlyingSpringrol/Boidsv1">Boid flocking algorithm</a></li>
-									<li><a href = "https://github.com/FlyingSpringrol/procPlanets">Planet generation</a></li>
-								</ul>
-								<span class="image main"><img src="images/cbspheres-5.png" alt="" /></span>
-								<h4> Cool projects from school </h4>	
-								<ul>
-									<li><a href = "https://cs184sp18.github.io/proj2-meshedit-FlyingSpringrol/">Mesh editing</a></li>
-									<li><a href = "https://cs184sp18.github.io/proj3_2-pathtracer-FlyingSpringrol/">Raytracer</a></li>
-									<li><a href = "https://github.com/FlyingSpringrol/flyingspringrol.github.io.git">Particle Simulation</a></li>
-									<li><a href = "https://flyingspringrol.github.io/CS160-p3-cycleIII/">Collage Creator</a></li>
-
-								</ul>
-								<span class="image main"><img src="images/P3cycle3.jpg" alt="" /></span>
-
-								<h4> Classes I've taken</h4>	
-								<ul>
-									<li>Calc 20a, 20b, 20c</li>
-									<li>Math 54: Linear Algebra</li>
-									<li>CS61B: Data Structures</li>
-									<li>CS61C: Machine Structures</li>
-									<li>CS70: Discrete Math and Probability</li>
-									<li>CS162: Operating Systems</li>
-									<li>CS184: Graphics</li>
-								</ul>
-							</article>
-
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Contact</h2>
-								<h4>
-									brian.aronowitz@berkeley.edu
-								</h4>
-								<ul class="icons">
-									<li><a href="https://www.linkedin.com/in/brian-aronowitz/" class="icon fa-linkedin"><span class="label">Linkedin</span></a></li>
-									<li><a href="https://github.com/FlyingSpringrol" class="icon fa-github"><span class="label">GitHub</span></a></li>
-								</ul>	
-							</article>
-
-						<!-- Elements -->
-							<article id="elements">
-								<h2 class="major">Elements</h2>
-
-								<section>
-									<h3 class="major">Text</h3>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
-									<hr />
-									<h4>Blockquote</h4>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-									<h4>Preformatted</h4>
-									<pre><code>i = 0;
-
-										while (!deck.isInOrder()) {
-										    print 'Iteration ' + i;
-										    deck.shuffle();
-										    i++;
-										}
-
-										print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-								</section>
-
-								<section>
-									<h3 class="major">Lists</h3>
-
-									<h4>Unordered</h4>
-									<ul>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
-
-									<h4>Alternate</h4>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
-
-									<h4>Ordered</h4>
-									<ol>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis viverra.</li>
-										<li>Felis enim feugiat.</li>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis lorem.</li>
-										<li>Felis enim et feugiat.</li>
-									</ol>
-									<h4>Icons</h4>
-									<ul class="icons">
-										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-									</ul>
-
-									<h4>Actions</h4>
-									<ul class="actions">
-										<li><a href="#" class="button special">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions vertical">
-										<li><a href="#" class="button special">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</section>
-
-								<section>
-									<h3 class="major">Table</h3>
-									<h4>Default</h4>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-
-									<h4>Alternate</h4>
-									<div class="table-wrapper">
-										<table class="alt">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</section>
-
-								<section>
-									<h3 class="major">Buttons</h3>
-									<ul class="actions">
-										<li><a href="#" class="button special">Special</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button">Default</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button special icon fa-download">Icon</a></li>
-										<li><a href="#" class="button icon fa-download">Icon</a></li>
-									</ul>
-									<ul class="actions">
-										<li><span class="button special disabled">Disabled</span></li>
-										<li><span class="button disabled">Disabled</span></li>
-									</ul>
-								</section>
-
-								<section>
-									<h3 class="major">Form</h3>
-									<form method="post" action="#">
-										<div class="field half first">
-											<label for="demo-name">Name</label>
-											<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
-										</div>
-										<div class="field half">
-											<label for="demo-email">Email</label>
-											<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
-										</div>
-										<div class="field">
-											<label for="demo-category">Category</label>
-											<div class="select-wrapper">
-												<select name="demo-category" id="demo-category">
-													<option value="">-</option>
-													<option value="1">Manufacturing</option>
-													<option value="1">Shipping</option>
-													<option value="1">Administration</option>
-													<option value="1">Human Resources</option>
-												</select>
-											</div>
-										</div>
-										<div class="field half first">
-											<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-											<label for="demo-priority-low">Low</label>
-										</div>
-										<div class="field half">
-											<input type="radio" id="demo-priority-high" name="demo-priority">
-											<label for="demo-priority-high">High</label>
-										</div>
-										<div class="field half first">
-											<input type="checkbox" id="demo-copy" name="demo-copy">
-											<label for="demo-copy">Email me a copy</label>
-										</div>
-										<div class="field half">
-											<input type="checkbox" id="demo-human" name="demo-human" checked>
-											<label for="demo-human">Not a robot</label>
-										</div>
-										<div class="field">
-											<label for="demo-message">Message</label>
-											<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="special" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
-
-							</article>
-
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-					</footer>
-
+			<div>
+				<h1> Hello, my name is Brian. </h1>
+				<img src="./me.png"/>
 			</div>
 
-		<!-- BG -->
-			<div id="bg"></div>
+			<div> 
+				<br/>
+				I study computer science at UC Berkeley. I'm currently in my last semester. I'm a designer, computer scientist, and artist, with a focus on 3D graphics, AR/VR, and HCI.
+			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<div class = "blocks">
+				<h3> Design </h3>
+				<p>
+					Augmented Reality Art Project - BAMPFA (2018 WIP)
+				</p>
+				<p> 
+					<a href="https://youtu.be/dJ-I3NvwaOI">Lawrence Hololens project </a>- lead designer (2018)
+				</p>
+				<p> 
+					<a href = "https://flyingspringrol.github.io/BloomEd_Cambrian/">The Cambrian</a> -360 storybook I made (2018)
+				</p>
+				<p>
+					<a href = "http://pengramar.com/">PengramAR </a> - lead designer. (2018)
+				</p>
+				<p>
+					<a href = "https://www.pantheonvr.com/">PantheonVR</a> - lead designer. (2017)
+				</p>
+				<p>
+					<a href = "https://www.youtube.com/watch?v=MzsP0DX4ff0">Memorease</a> - lead designer (2016)
+				</p>
+			</div>
 
+			<div class = "blocks">
+				<h3> Art </h3>
+				<p>
+					<a href = "https://www.facebook.com/theflyingspringrol/">My artist page</a>
+				</p>
+				<p>
+					<a href = "http://brianaronowitz.blogspot.com/">Creative writing </a>
+				</p>
+				<p>
+					<a href = "https://medium.com/@aronowb14">Medium writing </a>
+				</p>
+			</div>
+
+			<div class = "blocks">
+				<h3> Interactive Demos </h3>
+				<p>
+					<a href = "https://flyingspringrol.github.io/CS160-p3-cycleIII/">Interactive collaging</a> 
+				</p>
+				<p>
+					<a href = "https://flyingspringrol.github.io/Boidsv1/">Boids: WASD and arrows to move</a> 
+				</p>
+			</div>
+			<div class = "blocks">
+				<h3> Code Repos </h3>
+				<p>
+					<a href = "https://github.com/FlyingSpringrol/The-chronic">Genetic Algorithms</a>
+				</p>
+				<p>
+					<a href = "https://github.com/FlyingSpringrol/C.-Elegance">Visual Neural Net</a>
+				</p>
+			</div>
+			<div class = "blocks">
+				<p> Contact me at <b> brian.aronowitz@berkeley.edu </b></p>
+			</div>
 	</body>
 </html>
