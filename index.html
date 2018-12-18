@@ -26,7 +26,10 @@
 			<style> 
 			body{
 				font-family: 'PT Serif', serif;
+			}
+			.content{
 				padding: 10%;
+
 			}
 			.blocks{
 				padding-top: 4%;
@@ -34,67 +37,117 @@
 			img{
 				width: 100px;
 				height: 100px;
+				z-index: -1;
+			}
+			canvas{
+				position:absolute;
+				width: 100vw;
+				height: 100vh;
 			}
 		</style>
+   		<script src = 'Boidsv1/boids.js'></script>
 	</head>
 
 	<body>
-			<div>
-				<h1> Hello, my name is Brian. </h1>
-				<img src="./me.png"/>
-			</div>
+		    <script>
+	         //canvas code
+	         var canvas = document.createElement('canvas');
+	         canvas.width = 1000;
+	         canvas.height = 1000;
+	         canvas.id = 'canvas1';
+	         document.body.appendChild(canvas);
+	         var context = canvas.getContext('2d');
+	         var max = new Vector3(canvas.height, canvas.width, 50);
+	         var boidSpeed = 3.0;
+	         var boidSize = new Vector3(10, 10, 0);
+	         var boid1 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid2 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid3 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid4 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid5 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid6 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid7 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
+	         var boid8 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed,boidSize);
+	         var boid9 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed,boidSize);
+	         var boid10 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed,boidSize);
 
-			<div> 
-				<br/>
-				I study computer science at UC Berkeley. I'm currently in my last semester. I'm a designer, computer scientist, and artist, with a focus on graphics, AR/VR, and HCI. I have a background in biology, neuroscience and 3D art as well. 
-			</div>
+	         var boids = [];
+	         boids.push(boid1);
+	         boids.push(boid2);
+	         boids.push(boid3);
+	         boids.push(boid4);
+	         boids.push(boid5);
+	         boids.push(boid6);
+	         boids.push(boid7);
+	         boids.push(boid8);
+	         boids.push(boid9);
 
-			<div class = "blocks">
-				<h3> Design </h3>
-				<p>
-					Augmented Reality Art Project - BAMPFA (2018 WIP for Professor Luisa Caldas) - lead designer
-				</p>
-				<p>
-					<a href = "http://pengramar.com/">PengramAR (funded by YCombinator) </a> - lead designer. (2018)
-				</p>
-				<p>
-					<a href = "https://www.pantheonvr.com/">PantheonVR (funded by YCombinator) </a> - cofounder/lead designer. (2017)
-				</p>
-			</div>
-			<div class = "blocks">
-				<h3> Interactive Demos </h3>
-				<p>
-					<a href = "https://flyingspringrol.github.io/CS160-p3-cycleIII/">Interactive collaging</a> 
-				</p>
-				<p>
-					<a href = "https://flyingspringrol.github.io/Boidsv1/">Boid drawing</a> 
-				</p>
-				<p>
-					<a href = "https://flyingspringrol.github.io/Cellsv1/">Procedural trees</a> 
-				</p>
-			</div>
-			<div class = "blocks">
-				<h3> Art </h3>
-				<p>
-					<a href = "https://www.facebook.com/theflyingspringrol/">My artist page</a>
-				</p>
-				<p>
-					<a href = "http://brianaronowitz.blogspot.com/">Creative writing </a>
-				</p>
-				<p>
-					<a href = "https://medium.com/@aronowb14">Medium writing </a>
-				</p>
-			</div>
+	         function gameLoop(){
+	            //context.clearRect(0, 0, canvas.width, canvas.height); //clear for drawing
+	            update_boid_positions(boids);
+	            draw_boids(boids);
+	            window.requestAnimationFrame(gameLoop);
+	         }
+	         window.requestAnimationFrame(gameLoop);
+	      </script>
+	      <div class = "content">
+				<div>
+					<h1> Hello, my name is Brian. </h1>
+					<img src="./me.png"/>
+				</div>
 
-			<div class = "blocks">
-				<h3> Code </h3>
-				<p> Berkeley CS kid: Javascript, Python, C, C++, Java, HLSL, React, Unity, Data structures, machine structures, etc. </p>
-			</div>
-			<div class = "blocks">
-				<p> Contact me at <b> brian.aronowitz@berkeley.edu </b></p>
-			</div>
-			<div class = "blocks"> 
-				<a href = "./fakehome.html"> Room of Requirement -></a>
+				<div> 
+					<br/>
+					I study computer science at UC Berkeley. I'm currently in my last semester. I'm a designer, computer scientist, and artist, with a focus on graphics, AR/VR, and HCI. I have a background in biology, neuroscience and 3D art as well. 
+				</div>
+
+				<div class = "blocks">
+					<h3> Design </h3>
+					<p>
+						Augmented Reality Art Project - BAMPFA (2018 WIP for Professor Luisa Caldas) - lead designer
+					</p>
+					<p>
+						<a href = "http://pengramar.com/">PengramAR (funded by YCombinator) </a> - lead designer. (2018)
+					</p>
+					<p>
+						<a href = "https://www.pantheonvr.com/">PantheonVR (funded by YCombinator) </a> - cofounder/lead designer. (2017)
+					</p>
+				</div>
+				<div class = "blocks">
+					<h3> Interactive Demos </h3>
+					<p>
+						<a href = "https://flyingspringrol.github.io/CS160-p3-cycleIII/">Interactive collaging</a> 
+					</p>
+					<p>
+						<a href = "https://flyingspringrol.github.io/Boidsv1/">Boid drawing</a> 
+					</p>
+					<p>
+						<a href = "https://flyingspringrol.github.io/Cellsv1/">Procedural trees</a> 
+					</p>
+				</div>
+				<div class = "blocks">
+					<h3> Art </h3>
+					<p>
+						<a href = "https://www.facebook.com/theflyingspringrol/">My artist page</a>
+					</p>
+					<p>
+						<a href = "http://brianaronowitz.blogspot.com/">Creative writing </a>
+					</p>
+					<p>
+						<a href = "https://medium.com/@aronowb14">Medium writing </a>
+					</p>
+				</div>
+
+				<div class = "blocks">
+					<h3> Code </h3>
+					<p> Berkeley CS kid: Javascript, Python, C, C++, Java, HLSL, React, Unity, Data structures, machine structures, etc. </p>
+				</div>
+				<div class = "blocks">
+					<p> Contact me at <b> brian.aronowitz@berkeley.edu </b></p>
+				</div>
+				<div class = "blocks"> 
+					<a href = "./fakehome.html"> Room of Requirement -></a>
+				</div>
 			</div>
 	</body>
 </html>
