@@ -114,7 +114,7 @@ class Cell{
 		//Draw the white line that covers
 	   	this.context.strokeStyle = "#ffffff"
 		this.context.beginPath();
-		this.context.globalAlpha = 1.0;
+		this.context.globalAlpha = .1;
 		this.context.lineWidth = this.size/20.0;
 		var half_width = this.size/2;
 		var x = this.x - half_width;
