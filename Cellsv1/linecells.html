@@ -1,0 +1,51 @@
+<html>
+   <head>
+      <title>Cellsv1</title>
+   </head>
+   <script src = './linecells.js'></script>
+   <style>
+      canvas{
+         border: 1px dotted black;
+      }
+   </style>
+   <body>
+      <script>
+         //canvas code
+         loaded = false;
+         var canvas = document.createElement('canvas');
+         canvas.id = 'canvas1';
+
+         canvas.height =  1000;
+         canvas.width = 1000;
+         document.body.appendChild(canvas);
+         var context = canvas.getContext('2d');
+         var center_y = canvas.height / 2.0;
+         var center_x = canvas.width / 2.0;
+         var grid_width = 10;
+         var max_size = 200;
+
+         var max_cells = 10000;
+         var color = "black";
+
+         cells = [];
+         sp_hash = new Map();
+
+         state = new GlobalStateContainer(context, canvas, grid_width, cells, sp_hash, max_cells, color, max_size);
+         state.init();
+
+         function gameLoop(){
+            if (loaded){
+               update_cells(cells);
+               render_cells(cells);
+            }
+            window.requestAnimationFrame(gameLoop);
+         }
+         window.requestAnimationFrame(gameLoop);
+
+         document.addEventListener("DOMContentLoaded", function(event) {
+          console.log("DOM fully loaded and parsed");
+          loaded = true;
+        });
+      </script>
+   </body>
+</html>

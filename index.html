@@ -37,59 +37,56 @@
 			img{
 				width: 100px;
 				height: 100px;
-				z-index: -1;
+				z-index: 10;
 			}
 			canvas{
+				z-index: -1;
 				position:absolute;
 				width: 100vw;
-				height: 100vh;
 			}
 		</style>
-   		<script src = 'Boidsv1/boids.js'></script>
+   		<script src = 'Cellsv1/linecells.js'></script>
 	</head>
 
 	<body>
-		    <script>
-	         //canvas code
-	         var canvas = document.createElement('canvas');
-	         canvas.width = 1000;
-	         canvas.height = 1000;
-	         canvas.id = 'canvas1';
-	         document.body.appendChild(canvas);
-	         var context = canvas.getContext('2d');
-	         var max = new Vector3(canvas.height, canvas.width, 50);
-	         var boidSpeed = 3.0;
-	         var boidSize = new Vector3(10, 10, 0);
-	         var boid1 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid2 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid3 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid4 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid5 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid6 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid7 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed, boidSize);
-	         var boid8 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed,boidSize);
-	         var boid9 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed,boidSize);
-	         var boid10 = new Boid(context, new Vector3(Math.random() * canvas.width, Math.random() * canvas.height, 10), new Vector3(0, 0, 0), max, boidSpeed,boidSize);
+		<script>
+         //canvas code
+         loaded = false;
+         var canvas = document.createElement('canvas');
+         canvas.id = 'canvas1';
 
-	         var boids = [];
-	         boids.push(boid1);
-	         boids.push(boid2);
-	         boids.push(boid3);
-	         boids.push(boid4);
-	         boids.push(boid5);
-	         boids.push(boid6);
-	         boids.push(boid7);
-	         boids.push(boid8);
-	         boids.push(boid9);
+         canvas.height =  3000;
+         canvas.width = 3000;
+         document.body.appendChild(canvas);
+         var context = canvas.getContext('2d');
+         var center_y = canvas.height / 2.0;
+         var center_x = canvas.width / 2.0;
+         var grid_width = 10;
+         var max_size = 200;
 
-	         function gameLoop(){
-	            //context.clearRect(0, 0, canvas.width, canvas.height); //clear for drawing
-	            update_boid_positions(boids);
-	            draw_boids(boids);
-	            window.requestAnimationFrame(gameLoop);
-	         }
-	         window.requestAnimationFrame(gameLoop);
-	      </script>
+         var max_cells = 10000;
+         var color = "black";
+
+         cells = [];
+         sp_hash = new Map();
+
+         state = new GlobalStateContainer(context, canvas, grid_width, cells, sp_hash, max_cells, color, max_size);
+         state.init();
+
+         function gameLoop(){
+            if (loaded){
+               update_cells(cells);
+               render_cells(cells);
+            }
+            window.requestAnimationFrame(gameLoop);
+         }
+         window.requestAnimationFrame(gameLoop);
+
+         document.addEventListener("DOMContentLoaded", function(event) {
+          console.log("DOM fully loaded and parsed");
+          loaded = true;
+        });
+      </script>
 	      <div class = "content">
 				<div>
 					<h1> Hello, my name is Brian. </h1>
