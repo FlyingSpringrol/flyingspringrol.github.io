@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding-bottom: 100px;
+    padding-top: 100px;
+    width: 80vw;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Old Standard TT', serif;
+    color: black;
+    background-color: white;
+  }
+  img:hover{
+    opacity: .7;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Old Standard TT', serif;
+  }
+</style>
+<title>CS194-26 Proj3: Image Blending</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+</head>
+<body>
+  <h1 align="middle">CS194-26 Proj 4: Face Morphing</h1>  
+  <h2 align="middle">Brian Aronowitz: 3032201719, cs194-26-aeh</h2>  
+    <div align = "middle">
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/mesh.png" align="middle" width="400px"/>
+          </td>
+          <td>
+        </tr>
+      </table>
+    </div>
+
+    <div align = "middle">
+      <h3> Part 1: Midway Face</h3>
+      <p>
+        In this part of the project, we triangulate two faces with corresponding faces, and compute the midway face. This midway face consists of interpolating between the corresponding vertices on each face to find a midway set of vertices. We then Delaunay triangulate the face using scipy.spatial.Delaunay. This Delaunay triangulation defines the triangle set on both faces now. To get the midway face, we then look at all pixels in each triangle in the midway face. We convert these pixel coordinates to a barycentric coordinate. We then go back to the corresponding point in each of the triangles in the original two images, and interpolate accordingly.
+
+        Here is a midway face, of me and Taylor swift.
+      </p>
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/out25.png" align="middle" width="400px"/>
+          </td>
+          <td>
+        </tr>
+      </table>
+    </div>
+
+    <div align = "middle">
+      <h3> Part 2: Morph sequence</h3>
+      <p>
+        This morph sequence requires a small tweak in the part 1 code. Instead of averaging the points in the initial midway face calculation, the 'midway' face is created by weighting values of either the right or left image. This weight defines the interpolation. We smoothly interpolate using a value t, from 1.0/45.0 to 1. 
+      </p>
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/tmorph.gif" align="middle" width="400px"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div align = "middle">
+      <h3> Part 3: Average face</h3>
+      <p>
+        This part consists of calculating an average face. I use the Danes dataset, which consists of 40 images of Danish people, presumably. I parse the points, then calculate an average face from all 40 point sets. Then I weight the alphas by 1/N (where N) is the number of images. 
+      </p>
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/average.png" align="middle" width="400px"/>
+          </td>
+        </tr>
+      </table>
+      <h3> Part 3.1: Morphing Faces into Average </h3>
+
+      <p> This part just consists of morphing Dane faces into the average</p>
+
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/m2orig.jpg" align="middle" width="300px"/>
+          </td>
+          <td>
+            <img src="./images/1morphed.png" align="middle" width="300px"/>
+          </td>
+          <td>
+            <img src="./images/morph1.png" align="middle" width="300px"/>
+          </td>
+        </tr>
+         <tr>
+          <td>
+            <img src="./images/m1orig.jpg" align="middle" width="300px"/>
+          </td>
+          <td>
+            <img src="./images/5morphed.png" align="middle" width="300px"/>
+          </td>
+          <td>
+            <img src="./images/morph5.png" align="middle" width="300px"/>
+          </td>
+        </tr>
+      </table>
+      <h3> Part 3.2: Caricature </h3>
+
+      <p> This part consists of morphing my face into the average, with different interpolation weights on the midpoint face. The pictures are from .1, .8, and .9 (where higher numbers indicates higher values from the average face)</p>
+
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/c1.png" align="middle" width="300px"/>
+          </td>
+          <td>
+            <img src="./images/c8.png" align="middle" width="300px"/>
+          </td>
+          <td>
+            <img src="./images/c9.png" align="middle" width="300px"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div align = "middle">
+      <h3> Part 4: Bell and Whistle: Earth Animation</h3>
+      <p>
+        I made a morph sequence showing earth decaying over time, then coming back alive as humans leave.
+      </p>
+      <table style="width=100%">
+         <tr>
+          <td>
+            <img src="./images/earth.gif" align="middle" width="400px"/>
+          </td>
+          <td>
+        </tr>
+      </table>
+    </div>
+    <div align = "middle">
+      <h3> Conclusion</h3>
+      <p>
+        Although the idea of face morphing is quite cool, at it's core it feels a bit hollow. It felt like the algorithm lacked quite a bit of flexibility, which I would argue is the key to good artistic tools. 
+        I've been kind of stumped on making cool stuff for most of these projects. I come from a 3D rendering, drawing and painting background, things that are almost infinitely flexible in the things you can do with them. With purely pixel approaches, (like in these past projects) coming up with cool things has been difficult for me. It seems like the algorithms lack understanding of high level structure in the images. Combined with this lack of ability to manipulate high level structures in an intuitive way, the algorithms also do not run in a realtime, interactive way, which is something that makes almost every physical medium as intuitive and powerful as they are. 
+      </p>
+    </div>
+</html>

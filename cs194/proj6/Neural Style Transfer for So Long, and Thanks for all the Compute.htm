@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0095)https://inst.eecs.berkeley.edu/~cs194-26/fa18/upload/files/projFinalProposed/cs194-26-adv/docs/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Neural Style Transfer for So Long, and Thanks for all the Compute</title>
+    
+    <link href="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/style.css" media="screen">
+    <script src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/jquery.min.js"></script>
+    <script src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/script.js"></script>
+</head>
+<body>
+<br>
+<div class="container">
+    <h1>CS 194 Final Project</h1>
+    <div class="content--fullwidth bottom-padding-20 big-scaledown">
+            <div class="row">
+                <div class="column">
+                    <div class="img-box">
+                        <img src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/3-shots.png" align="middle">
+                    </div>
+                </div>
+            </div>
+    </div>
+    <h1 class="title">Neural Style Transfer for So Long, and Thanks for all the Compute</h1>
+    <h3 class="author">By Brian Aronowitz and Stephanie Claudino Daffara</h3>
+    <p>
+        Since Gatys et al.'s seminal work on style transfer, there has been a
+        wealth of research on improving their technique [5]. Research ranges
+        from improving the aesthetics of style transfer, to improving speed
+        [8], to stylizing videos [3], and analyzing hyperparameter tuning [11].
+        Along with the technical research, artists are already beginning to
+        use style transfer in a variety of striking and interesting ways. As
+        students, we wondered if it would be possible to express our own
+        lived experiences at UC Berkeley through the unique visual style the
+        medium provides. We propose the use of this technique as an effective way
+        to convey emotions and other abstract information.
+    </p>
+
+    <h2 class=".parts">Artistic Goals</h2>
+        <p>
+            As graduating seniors, we wanted to capture the feeling of completing
+            a computer science degree at UC Berkeley, from the stress of
+            midterms, to the frustrating nature of CalCentral (the online
+            class registration platform), through the overwhelming
+            feeling of project deadlines, and the final relief that it is over.
+        </p>
+        <p>
+            We evaluated many examples of style transfer on video, drawing
+            our inspiration from many different sources [1, 2, 4, 13]. We explored
+            2D video and images as a possibility for our project, but settled
+            on 360 videos, inspired by the possibility of 360 videos as a medium
+            for personal experiences [14].
+        </p>
+        <p>
+            We chose to use images as style objects from our day to day
+            lives that we felt represented our lived experiences: screenshots of
+            latex CS70 midterms, programming IDE's, and CalCentral. Based on
+            initial results, the anxiety inducing flashing filters created by neural
+            networks would convey the feelings from these chosen images in a
+            suitable way, so we proceeded with neural styling. Tuning out neural
+            styling would be the majority of the technical work in the project.
+        </p>
+
+    <h2 class=".parts">Initial Setup</h2>
+        <h3>Framework Exploration</h3>
+            <p>
+                Evaluating different frameworks took us the bulk of the time in this
+                project. We began by testing Pix2Pix [6], and had it learn different
+                mappings from edges to color, and blurs to color, on certain datasets.
+                It in particular performed extremely well learning the mapping from
+                median blurred watercolor paintings, to the textured watercolor
+                paintings.
+            </p>
+            <p>
+                While our initial results were promising, there were several constraints
+                on the vanilla Pix2Pix method. We wanted at least 4k by
+                2k video, which while possible to achieve on the 256x256 pixel
+                outputs from the net combined with stitching, would require a significant
+                amount of computing power to run. We also realized that
+                what would work for our artistic purposes would be simple style
+                transfer, that is, low-level features in images would be enough to
+                achieve our artistic goals. After a bit of research, we settled on using
+                PyTorch's implementation of fast neural style transfer, which builds
+                off of Johnson et al.'s paper [8].
+            </p>
+        <h3> PyTorch Fast-Neural Style Evaluation</h3>
+            <p>
+                The PyTorch fast neural net code is based off Johnson et. al.'s research
+                on fast neural style. The key idea of the research is to create a
+                feedforward neural net that can capture the perceptual loss between
+                images [8]. The net is trained by running the entire Microsoft
+                COCO dataset through a pretrained VGG-16 net and using the style
+                loss of each image against the style image as the training data for
+                the feedforward net. The net effectively captures the perceptual
+                optimization function that Gatys et al. explicitly codes [5]. The
+                primary advantage of this method is that once the net is trained,
+                it can stylize an image with a single pass of the net. On a P100
+                GPU it takes about 2 seconds to process a frame. Furthermore, this
+                technique also is extremely powerful in the fact that the net is a fully
+                convolutional system, meaning it can be run with arbitrarily sized
+                input and output images [12].
+            </p>
+            <p>
+                There are also disadvantages to this approach. For each new
+                style, an entire new neural network has to be trained, which can
+                dramatically slow down progress. Furthermore, we found that the
+                aesthetics on this approach are slightly worse than the naive Gatys et
+                al. approach. Often the net doesn't fully stylize the image: leaving out
+                sections that it has not learned how to generalize to. Disadvantages
+                aside, in our initial tests we found the PyTorch framework to be
+                extremely user friendly and easy to work with [15].
+            </p>
+        <h3>Technical pipeline</h3>
+            <p>
+                We filmed our scenes using a 360 Samsung Gear (2017) camera, which shoots a 2k by 1k
+                24 fps video. The native software it comes packaged with takes care
+                of stitching the two 180 degree shots. We recorded audio using both an
+                external lapel mic and the camera's internal mic. For processing and training
+                our neural networks, we used the UC Berkeley CSUA
+                (Computer Science Undergraduate Association) GPU cluster,
+                where there are 10 P100 NVIDIA GPU's that are accessible through
+                ssh. We used PyTorch's example implementation of fast neural style
+                for image training and running.
+            </p>
+            <p>
+                There were several modules of custom code we wrote in the
+                pipeline. Naive stitching of a stylized image will result in a noticeable
+                seam along the right and left edges of the images, as the kernels in
+                the net will produce estimates along those edges that don't consider the continuous
+                nature of a 360 image. To get around
+                this problem [10], propose extending the image by
+                copying the a portion of the left side, to the right side, and vice versa,
+                acting as a type of padding. Once stylized, this padding is then cut off:
+            </p>
+            <div class="content--fullwidth bottom-padding-20 scaledown">
+            <div class="row">
+                <div class="column">
+                    <div class="img-box">
+                        <img class="hover-image" src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/seam.png" align="middle">
+                        <div class="overlay-image">
+                            <div class="text">
+                                <p>Naive Approach</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="img-box">
+                        <img class="hover-image" src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/noseam.png" align="middle">
+                        <div class="overlay-image">
+                            <div class="text">
+                                <p>Extended then Cropped Approach</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+            The other pre-processing code we wrote was to add a small
+            amount of median blur to the image before stylizing. We found
+            this added to the dream-like aesthetic we were going for, and reduced
+            the jumpiness of the video from frame to frame. We used
+            opencv’s median blur function, and kept its kernel size at 3 [7].
+        </p>
+
+    <h2 class=".parts">Style Discovery</h2>
+        <h3>Hyperparameter Heuristics</h3>
+            <p>
+                It took quite a while to discover the styles for each scene of the film. Tuning
+                hyperparameters and training one net took 4-6 hours to run on the
+                GPU cluster. Furthermore, generalizing from one image's success to
+                another was not consistent. An image that behaves well at the style-weight
+                (a hyperparameter for style-loss that gets multiplied by the mean squared error loss
+                function causing the overall style-loss to increase by a factor of the hyperparameter) of
+                1e10 might do terribly at 5e10, but another image that looks terrible
+                at 1e10 might look great at 5e10. After six or seven style iterations,
+                we decided the possible range of style-content values was from 1e10
+                to 1e11, and anything below or above was generally too strong or
+                too weak.
+            </p>
+
+        <h3>Experimental Methods</h3>
+            <p>
+                To test feasibility of style on images, we simply ran the net on 2
+                different 360 images at 2k resolution, to test how they looked. A
+                future approach to this would have been more scientific about this selection,
+                some styles work well on dark, and fail on light content images, and
+                vice versa. Building a set of good test images is a suggestion for future work.
+            </p>
+            <p>
+                This initial discovery phase for images was only evaluated on
+                static images as well, so after collecting 15 good styles we further
+                eliminated styles that didn't work as video, if they were too flashy
+                (which is bad for in Head Mounted Display watching), or simply looked aesthetically
+                bad.
+            </p>
+            <p>
+                To test feasibility of style on videos, we ran 100 frames
+                of a 360 video at 2k resolution and compared results. Another suggestion
+                for future work would be to come up with a good test set of style
+                videos, and fully automate the testing pipeline to run the style on all
+                test images and test videos, to determine good matches.
+            </p>
+            <p>
+                There were several other interesting results from small experiments
+                we ran, from a cut and paste styles experiment,
+                and also evaluated the possibility of variable image sizes for better
+                stitching.
+            </p>
+            <p>
+                In a couple style images we noticed that the style transfer caused the output image
+                to lose depth information. To tackle this problem we extrapolated from a technique used
+                by Bhautik's et al. [9] that added larger blocks of the desired color and texture to the style image.
+                We did some similar experiments with a couple scenes:
+            </p>
+
+            <div class="content--fullwidth bottom-padding-20 big-scaledown">
+                <div class="row">
+                    <div class="column">
+                        <div class="img-box">
+                            <img src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/happy-copyPaste.png" align="middle">
+                        </div>
+                        <div class="img-box">
+                            <img src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/cs70-copyPaste.png" align="middle">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                For the Leonid Afremov painting the Copy-Paste method worked pretty well, outlining our characters
+                and separating them from the background. But in the Latex-CS70 style, this method produced a less
+                desirable output image, with black streaks in certain places and considerably less detail in the
+                character's face and the sheets of paper. So once again we did not perfectly use this method
+                throughout all the scenes since it only produced a better outcome on some inputs.
+            </p>
+
+        <h3>Reasoning About Style Images</h3>
+        <p>
+            After a significant amount of iteration, and frustration, we had to reframe
+            our thinking to find good style images. Our main conclusions
+            are outlined below.
+        </p>
+        <ul>
+            <li>Style transfer techniques act as more of a content-aware filter,
+                not an AI painter as most literature is advertising.</li>
+            <li>Our particular fast neural network approach to style transfer,
+                due to its weighting on early level Re-Lu layers in the convolutional
+                net, captures mostly low-level features in the style
+                images, not high level features.</li>
+            <li>Thinking about style images mostly in terms of their low level
+                chunks and features contained in their chunks was the most
+                powerful way of reasoning about what style images would
+                work.</li>
+        </ul>
+        <p>
+            The most important factors we identified in our style images and
+            resulting videos are as follows:
+        </p>
+        <ul>
+            <li> Most commonly occurring low-level features.</li>
+            <li>Color distribution of style image.</li>
+            <li>Color distribution of content image.</li>
+        </ul>
+        <p>
+            The style will be applied with the following rules:
+        </p>
+        <ul>
+            <li>To the input image sections with the closest matching colors.</li>
+            <li>The algorithm will sometimes respect object outlines, but will
+                do it conservatively. This means it will leave unstyled margins
+                around the inside and outside of sharp color gradients.The algorithm will sometimes respect object outlines, but will
+                do it conservatively. This means it will leave unstyled margins
+                around the inside and outside of sharp color gradients.</li>
+        </ul>
+        <p>
+            We also made some preliminary conclusions about how well this
+            specific approach works on video.
+        </p>
+        <ul>
+            <li>Smooth motion is nearly impossible using this technique, and
+                if you want more temporally aware frames, use a different
+                neural network framework. [15]</li>
+            <li>To prevent jittering from frame to frame, using super simple,
+                blurred and median blurred styles is generally effective.</li>
+            <li>If you want jittered, anxious motion, use images with highly
+                varied low-level features.</li>
+        </ul>
+
+    <h2 class=".parts">Post-Production</h2>
+        <p>
+            The film was edited using Premiere Pro and an Oculus Rift for previewing the scenes. Cuts between scenes vary
+            from cross-dissolves to jump cuts, and fade-to-black. Some of these cuts had to be carefully calculated
+            since the styles in consecutive scenes varied so much. For example, between the CalCentral scene and the Midterm
+            scene, the scenes were cross-dissolved, but also had matching cuts where the character is in the same position
+            at the end of one scene and start of the other. Also, to make the transition even smoother, the style weight
+            was lessened at the end of one scene, and the beginning of the other, and then gradually brought back to it's
+            desired weight. This way the viewer has a smoother transition.
+        </p>
+
+        <div class="content--fullwidth bottom-padding-20 big-scaledown">
+            <div class="row">
+                <div class="column">
+                    <div class="img-box">
+                        <img class="hover-image" src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/calcentralScene.png" align="middle">
+                        <div class="overlay-image">
+                            <div class="text">
+                                <p>End of CalCentral Scene</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="img-box">
+                        <img class="hover-image" src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/midtermScene.png" align="middle">
+                        <div class="overlay-image">
+                            <div class="text">
+                                <p>Start of the Midterm Scene</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <p>
+        One other notable detail about the editing was masking out the stylized sky in the ending scene because its
+        look was less appealing than the original sky and was giving the scene the exact opposite effect that we
+        wanted, which was one of hope. You can compare the original sky to the stylized sky in the Figure
+        below that shows all of the styles, row 6.
+    </p>
+
+    <h2 class=".parts">Results</h2>
+
+        <p>
+            The best method of viewing this film is wearing a VR HMD such as the Oculus Rift
+            or the HTC Vive. The next best option is to use your phone in any Cardboard like HMD.
+            Finally, if you must, watch it in a browser using your mouse or arrow keys to control the 360 viewer.
+            If you are located in Berkeley, CA you can stop by the VR@Berkely Lab to watch it.
+        </p>
+        <p>
+            Here is the resulting 360 film for viewing in the browser. Make sure the move around in 360!
+        </p>
+        <center>
+            <iframe width="560" height="315" src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/mfZ9-9tH_uE.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+        </center>
+
+        <p>
+            We leave subjective conclusions up to the reader about the success
+            of the piece, but on resulting watches from the authors, we found
+            the piece communicated our artistic goals quite effectively
+        </p>
+
+        <div class="content--fullwidth bottom-padding-20 big-scaledown">
+            <div class="row">
+                <div class="column">
+                    <div class="img-box">
+                        <img src="./Neural Style Transfer for So Long, and Thanks for all the Compute_files/LargeTableStyles.jpg" align="middle">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <h2 class=".parts">Conclusion</h2>
+        <p>
+            Our key takeaway from this project was thinking about the tool less
+            as AI artist and more as a content-aware filter.
+        </p>
+        <p>
+            It's an extremely flexible tool and has an almost infinite parameter
+            space of style images and outputs, but the method also had extremely
+            slow training times, and we needed a lot of time to iterate on our
+            results. Thats what we saw as the main drawback: the slow iteration.
+            It took us a month to evaluate Pix2pix fully, and another month to
+            generate the nets with PyTorch to use for this project. Still, we only
+            had about 24 samples to draw off of, and although towards the end
+            we had some general heuristics for what would work, we still didn't
+            have an amazing way of finding the perfect style images for what
+            we wanted. In conclusion though, we show that you can express nuanced
+            feeling using the medium of 360 footage combined with style transferring.
+        </p>
+    <h2 class=".parts">Future Directions</h2>
+        <p>
+            The future for neural stylization is bright. As cited in the introduction,
+            there is a wealth of research being published about neural style
+            transfer, and the technique of mixing high and low level features
+            from images. Still, we feel that as an artistic tool, there is a lot of be
+            desired.
+        </p>
+        <p>
+            We see this research extending in several different directions:
+            The first direction would be to push this network styling in a more
+            artist friendly direction. Having a flexible and tunable tool would be
+            incredible, such as being able to mess around with hyperparameters
+            and see the results of turning them up and down. This is effectively
+            the direction in which the Google Brain research team went, but still
+            we think there are opportunities to innovate here. For example, being
+            able to pull from higher level feature layers in a fast way would be a
+            welcome addition. [3] Furthermore, allowing easy compositions of
+            nets, for example, plugging the output of one net into the input of
+            a different stylization net could be an interesting way of creating a
+            tool that could be used by artists.
+        </p>
+        <p>
+            In a second direction, creating stable auto-generated video masks
+            would be an incredible asset for stylization: simple divisions to
+            allow for dilation of styles, masking, and separate motion would
+            be incredible. Having these segmentation videos be input invariant
+            would also help in creating beautiful artistic pieces. [12]
+        </p>
+
+    <h2 class=".parts">References</h2>
+    <div>[1] Do not touch.</div>
+    <div>[2] M. Atkin. Learning to see.</div>
+    <div>[3] V. Dumoulin, J. Shlens, and M. Kudlur. A learned representation for artistic style. 2016.</div>
+    <div>[4] C. V. Freiburg. Style transfer for a 360 vr video.</div>
+    <div>[5] L. A. Gatys, A. S. Ecker, and M. Bethge. A neural algorithm of artistic style. 2015.</div>
+    <div>[6] P. Isola, J.-Y. Zhu, T. Zhou, and A. A. Efros. Image-to-image translation with conditional adversarial networks. 2016.</div>
+    <div>[7] Itseez. Open source computer vision library. https://github.com/itseez/opencv, 2015.</div>
+    <div>[8] J. Johnson, A. Alahi, and LiFei-Fei. Perceptual losses for real-time style transfer and super-resolution. 2016.</div>
+    <div>[9] B. Joshi, K. Stewart, and D. Shapiro. Bringing impressionism to life with neural style transfer in come swim. 2017.</div>
+    <div>[10] L. Lei and M. Castillo. Style transfer for vr.</div>
+    <div>[11] Y. Li, N. Wang, J. Liu, and X. Hou. Demystifying neural style transfer. 2017.</div>
+    <div>[12] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. 2015.</div>
+    <div>[13] MGMT. When you die.</div>
+    <div>[14] C. Milk. Vr is an empathy machine.</div>
+    <div>[15] A. Paszke, S. Gross, S. Chintala, G. Chanan, E. Yang, Z. DeVito, Z. Lin,A. Desmaison, L. Antiga, and A. Lerer. Automatic differentiation inpytorch. InNIPS-W, 2017.</div>
+    <div>[16] J.-Y. Zhu, T. Park, P. Isola, and A. A. Efros. Unpaired image-to-imagetranslation using cycle-consistent adversarial networks. 2017.</div>
+
+    <p>View the report version of this
+        <a href="https://drive.google.com/file/d/1QMoIv5ts-rn6b69thIcbfIEFZU1aHCo7/view?usp=sharing">here</a>
+    </p>
+    <center><p>❤</p></center>
+
+</div>
+
+
+
+
+</body></html>

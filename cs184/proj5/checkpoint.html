@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Final Project</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+  <h1>2D Particle Based Motion Interactive Fluid Simulation</h1>  
+  <h2>Abstract</h2>
+  Particles system can be used to simulate a range of fluids or gases. However, we didn’t see many real time interactive applications that allow user input from hands directly. In this paper, we present modules and implementations of how we enables an interactive water simulation, where user’s head or hand can be used as input to manipulate fluid simulated. We attempt to simulate and render particles by repurposing the GPU from the rasterization process. Instead of drawing 3D geometry to screen, we are instead using the GPU as a massively parallel processor for rendering and simulation.
+  <h2>Introduction</h2>
+  Interactive experience is usually more entertaining for both users and the audience. This is done in a combination of back end calculation, rendering, front end cue for users, as well as user input capture. We choose to work on fluid interactive simulation for various reasons. Being visually cool aside, recent years computation power of computer increases significantly. It allows rendering a large amount of particles with unperceivable latency. The GPU is a massively parallel processor, with many pipelines that are specifically optimized to do math involving graphics. Fluid simulation, fortunately, can be parallelized and takes advantages of it. The advancement of GPU processing power allows rendering highly detailed and realistic fluids to be possible. 
+  On interaction side, similar progress has been made on computer vision. Open source community has accumulated a wealth of information on various computer vision. Tracking, for example, is one of the most well studied field and would serve as basis for our input mechanism. 
+
+  <h2>Literature Review</h2>
+  Simulating fluid itself has been well studied before. Braley et al. [1] gives an brief overview of the math to simulating fluid. He explained both grid based solution as well as particle based solution. The grid based solution can achieve higher efficiency and better result, but harder to implement. The basic idea for grid based system is to divide the entire simulated physical space into different small virtual boxes. Therefore, it’s relatively easy to look up neighbors for a given query coordinate. Particle system, on the other hand, stores an array of particles that makes up the fluid in the scene, and records their positions in the particle data structure. This is easier to implement and understand but takes longer to query nearest neighbors.
+  To translate 2D discrete particle system to more realistic fluid geometry, we referenced Yu et al.’s work [2] by utilizing metaball in order to create a simulated water effects based on whether and how each pixel is occupied, to create a blobby effect and thus more similar to water.
+
+
+  <h2>Our Methods</h2>
+  We divided our project into three separate modules. The physics module computes locations of each particles in float precision. In calculation of forces exert on each particle, we also include external force generated from computer vision module, which tracks head and hand positions. Finally, at every frame, updated position of each particle is sent to rendering for visualization.
+  <h4>Module 1: Shaders</h4>
+  We achieve these goals by covering the screen view with a plane and using fragment shaders for the rendering of particles. We are still working on parallelizing the simulation of particles. We are also streaming data from CPU -> GPU by using OpenGL 3.0's Uniform Buffer streaming, which is much more efficient than previous methods.
+
+  <h4>Module 2: Particle Physics</h4>
+  Physics of the fluid is approximated using particle based simulation based on incompressible Navier-Stokes equations[3]. To start, we create a finite amount of particles, with each particle containing its position, velocity, density, pressure as well as the force exerted on it. To start, each particle is initialized at grid location with certain random minor variables. Their velocity and force are set to be zero. At every frame, three sequential calculations are performed on each particle. 
+  <ul>
+    <li>Calculating density and pressure of each particle. This is done by creating a spatial hash table that represents a 2D box that contains arbitrary number of particles in that box. Therefore, a new spatial hash map is created at every frame, and each particle can only be possible to be assigned to one hash 2D box. This enables easy lookup of a query particles neighbors, by simply looking up particles in its 2D box. In order to calculate the density of this particle, we find the contribution of its neighbor’s density subject to Muller’s Poly6 function [4]. Then, the pressure of each particle is based on ideal gas law.</li>
+    <li>Calculate force exerted on each particle. This is done by finding all neighbors that contributes to a particle’s pressure force and viscosity force, subject to kernel described in [4], and then added to gravitational force and human made external force from HCI module.</li>
+    <li>Numerical integration to get final particle positions. Once all the information is obtained as described above, we use simple F=ma to obtain the acceleration on each particle resulting from force, and does a simple Euler’s method to approximate the updated particle location, subject to boundary conditions. Meaning if the particle goes out of bound, its position got pulled back and its velocity got reduced by half to simulate an energy loss effects upon contacting with virtual ground or wall.</li>
+  </ul>
+  <h4>Module 3: HCI</h4>
+  We initially chose OpenCV due to it’s scalability: our goal being that we could simply load up this code on someone’s laptop and they could interact with fluids in real time. 
+  Our design methodology was to seek out the most pleasant and intuitive interaction with the fluid. The first response that a person would have was to run their hands through it, so we started by researching basic hand tracking algorithms. 
+  The first iteration we went through involved HSV conversion of our video stream, and thresholding based on the values of human skin color to identify the hand. From there, you can track ‘hands’ using contour extraction and some basic area heuristics. Unfortunately, the tuning of these parameters would change depending on lighting and the person’s skin color in question, so we abandoned this strategy.
+  Next we began experimenting with optical flow, an algorithm which tracks pixel motion over time. This algorithm generates a full grid of motion values, which we thought could possibly work well as form of interaction with a grid based fluid simulation. After some experimentation, we realized that optical flow works better on large gradients, and would only generate flows around the edges of objects. Furthermore, it would generate stronger motion fields around the hair and clothing of the person trying to interact with the simulation, rather than their moving hand. We put this strategy on hold to pursue more robust options. 
+  Our third iteration involved a naive face tracker, which uses a HAAR cascade to track faces. We were surprised at the stability and robustness of this algorithm, and its ability to support multiple faces at once. It rarely drops faces once detected, which allows for computation of motion vectors between frames. This stability was what we were searching for, it turns out stable, predictable behaviour was the key to defining a good interaction scheme with the fluid.
+  We made a fourth attempt to get hand interaction working. Due to our success with the face tracker, we experimented with some HSV auto-thresholding based on the average color of the faces it detected. This attempt was a combination of our first and third strategies, and we hoped this auto-thresholding could allow for robust hand tracking. Unfortunately, it did not, hands against variable backgrounds were often lost, leading to unpredictable behaviour, which ruined the immersion of the interaction.
+  
+  <h2>Results</h2>
+  <a href="https://www.youtube.com/watch?v=swG2uv7mOGI&feature=youtu.be">Link to our video</a>
+  
+  <h2>Further Improvements</h2>
+  We are planning on actually integrating the OpenCV support into interaction with the particles.  Also, we want to improve performance more by utilizing thread parallelism as well as moving more work onto the GPU.  We also need to write better algorithms to improve speed on both sides.
+
+  Also, we need to work on how the simulation works visually.  Particle colors right now are causing collisions, so it would be nice if they blended together.
+
+  <h2>References</h2>
+  [1] <a href="http://users.encs.concordia.ca/~grogono/Graphics/fluid-5.pdf">Fluid Simulation Overview</a>
+  [2] <a href="https://www.sciencedirect.com/science/article/pii/S009784939900031X">Fluid blobby effects from particle system</a>
+  [3] <a href="http://bigtheta.io/2017/07/08/implementing-sph-in-2d.html">Physics behind fluid simulation</a>
+  [4] <a href="http://matthias-mueller-fischer.ch/publications/sca03.pdf">More details on physics behind fluid simulation</a>
+  <!-- <h2>What we have accomplished</h2> -->
+  <!-- <ul> -->
+  <!--   <li>Parallel particle rendering via fragment shaders</li> -->
+  <!--   <li>Real time data streaming from CPU using uniform buffers</li> -->
+  <!--   <li></li> -->
+  <!-- </ul> -->
+
+</body>
+</html>

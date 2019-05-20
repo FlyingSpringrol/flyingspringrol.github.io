@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Final Project</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2018</h1>
+<h1 align="middle">Final Project: Particle Simulator</h1>
+
+<br><br>
+
+<div>
+
+<h2 align="middle">Team Members</h2>
+<p>Brian Aronowitz: 3032201719</p>
+<p>Will Huang: 24362816</p>
+<p>Stephen Jayakar: 3031791647</p>
+
+<h2 align="middle">Problem Description</h2>
+<p>Photorealistic real-time rendering is perhaps the holy-grail of graphics. A potential solution to this problem is light field rendering. Our project will center around properly generating lightfields from computer-generated image data and viewing these lightfields from different perspectives. We plan on implementing the algorithm from Marc Levoy and Pat Hanrahan’s original research on light field rendering. We also plan on exploring the variety of compression techniques in their articles as well as experimenting with aliasing techniques to more efficiently and accurately render the lightfields we generate. If we have time, we plan on also exploring VR rendering of lightfields. </p>
+
+<h2 align="middle">Goals and Deliverables</h2>
+<b>Plan to deliver:</b>
+<p>We plan on delivering an interactive application that allows for the viewing of lightfields, as seen in this <a href="https://www.youtube.com/watch?v=dMcZpeGOBPI">video</a>. </p>
+<p>This involves several things: </p>
+<ol>
+  <li>Light field generation from images (rendered either using the path-tracer from projects 3-1 and 3-2 or using an external renderer like Blender Cycles or Pixar’s Renderman)</li>
+  <li>Light field viewing: using the 2-slab technique</li>
+  <li>Light field compression (The original article from Marc Levoy and Pat Hanrahan shows how to achieve 100:1 compression)</li>
+  <li>Light field anti-aliasing: using bilinear interpolation</li>
+</ol>
+<p>Analysis</p>
+<ol>
+  <li>Memory use analysis pre and post compression (Using Entropy-coding)</li>
+  <li>Speed analysis when bilinear sampling is used </li>
+</ol>
+
+<p>We hope to establish how well compression works with light fields, and also how computationally costly the anti-aliasing techniques are.</p>
+
+<b>Hope to deliver:</b>
+<p>We would love to both implement the features stated above as well as other optimizations/ features for the viewing</p>
+<ol>
+  <li><a href="https://www.youtube.com/watch?v=p2w1DNkITI8">Optimized ray-selection</a></li>
+  <li>Compression: using Entropy-coding and Vector Quantization (with analysis)</li>
+  <li>Light field viewing: using the 4-slab technique (allows for 360 degree viewing)</li>
+  <li>Outside-facing light-field rendering, using infinite slab technique (in original article)</li>
+</ol>
+<p>We would also love to implement <a href="https://www.youtube.com/watch?v=4F96ZcF75eg ">VR viewing</a> of light fields: (Unfortunately, there are less resources and research Hfpapers written on the the topic)</p>
+
+<h2 align="middle">Schedule</h2>
+<b>Week 1</b>
+<p>Research, pseudo-code, understand math, begin generating the light-fields, viewing with different perspectives and figure out efficient way of farming out render jobs to multiple computers.</p>
+<b>Week 2</b>
+<p>Finish generating the light-fields, viewing with different perspectives</p>
+<b>Week 3</b>
+<p>Optimizations (optimized ray selection) + antialiasing (bilinear-interpolation) + Compression (entropy-coding) </p>
+<b>Week 3-4</b>
+<p>Write-up, fix bugs: 4-slab rendering + outside-facing lightfields + VR rendering if time</p>
+
+<h2 align="middle">Platform</h2>
+<b>Renderer</b>
+<p>Either pathtracer from proj3-2, or Blender Cycles, or Renderman</p>
+<b>Interactive Application</b>
+<p>For presentation purpose, we also plan to make a simple front end application on mac, written in Ojective-C, to show interactiveness of the lightfield view</p>
+<b>Hardware</b>
+<p>If time permits, instead of creating a desktop application, we will also require an Oculus Rift to create a VR viewing experience.</p>
+
+<h2 align="middle">Resources</h2>
+<a href="https://graphics.stanford.edu/papers/light/light-lores-corrected.pdf">'96 Implementation</a><p></p>
+<a href="https://www.youtube.com/watch?v=dMcZpeGOBPI">'96 Implementation of Light Field</a><p></p>
+<a href="https://www.youtube.com/watch?v=p2w1DNkITI8">More recent implementation of lightfield</a><p></p>
+<a href="http://www.cs.harvard.edu/~sjg/papers/drlf.pdf">Conresponding Articles</a><p></p>
+<p>Light field rendering in VR:</p>
+<a href="https://www.youtube.com/watch?v=msNVZT3USEM ">Link 1</a><p></p>
+<a href="https://www.youtube.com/watch?v=4F96ZcF75eg ">Link 2</a><p></p>
+<a href="https://www.youtube.com/watch?v=pyJUg-ja0cg ">Link 3</a><p></p>
+<a href="https://www.blog.google/products/google-vr/experimenting-light-fields/ ">Link 4</a><p></p>
+<a href="https://developer.oculus.com/downloads/package/cubemap-viewer/ ">Link 5</a><p></p>
+<a href="https://www.disneyresearch.com/publication/real-time-rendering-with-compressed-animated-light-fields/ ">Link 6</a>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <style>  
+  div.padded {  
+    padding-top: 0px;  
+    padding-right: 100px;  
+    padding-bottom: 0.25in;  
+    padding-left: 100px;  
+  }  
+  body {
+  padding: 100px;
+  width: 1000px;
+  margin: auto;
+  text-align: left;
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+  color: #121212;
+  }
+  h1, h2, h3, h4 {
+  font-family: 'Source Sans Pro', sans-serif;
+  }
+  </style> 
+<title>CS 184 Cloth Simulator</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2018</h1>
+<h1 align="middle">Project 4: Cloth Simulator</h1>
+<h2 align="middle">Brian Aronowitz, CS184-AGR</h2>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt1/all_c.png" align="middle" width="400px"/>
+              <figcaption align="middle"></figcaption>
+            </td>
+            <td>
+              <img src="images/pt3/sp_ks_500.png" align="middle" width="400px"/>
+              <figcaption align="middle"></figcaption>
+            </td>
+              
+          </tr>
+      </table>
+</div>
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+<p>In this project we implemented a physically based cloth simulation. The cloth can be simulated based on a spring-based constraint system, which connects a grid of pointMasses together. There are several types of spring that are created that make it function like a real cloth: structural (essentially a basic grid of springs), Shearing (diagonal grid of springs), and bending (a basic grid that extends between every two points.) These springs all behave according to Hook's law, pulling or pushing pointmasses together depending on their position. In part 2 we added in the physically based simulation code, which updates positions based on Verlet integration. In part 3 we added in collisions with planes and spheres, and in part 4 we added in the final touch, efficient self-collision using spatial hashing. </p>
+
+<h2 align="middle">Part I: Masses and springs</h2>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt1/shearing.png" align="middle" width="400px"/>
+              <figcaption align="middle">Just shearing</figcaption>
+            </td>
+            <td>
+              <img src="images/pt1/noshearing.png" align="middle" width="400px"/>
+              <figcaption align="middle">Just stuctural and bending</figcaption>
+            </td>
+              
+          </tr>
+          <div align = "middle">
+            <tr>
+              <td>
+                <img src="images/pt1/all_c.png" align="middle" width="400px"/>
+                <figcaption align="middle">All components</figcaption>
+              </td>
+            </tr>
+          </div>
+      </table>
+</div>
+<p>Part one was about initializing the grid of springs. This process involves first creating a 1D vector of point_masses, which can be indexed in row-major order. (y_coord * num_masses_in_width + x_coord). After the point_masses are created, I then create the structural springs. I did this by iterating over all the x-1 to y-1 points, adding springs to the left and right of each spring. This leaves the top and left rows springless, so I iterate again through all the points on the left and top row and add in the springs they need. For the diagonal springs, I did it a similar way. Iterate from 1 to x-1 and from 1 to y-1, and attach springs to the top left and top right of the spring. Again, this leaves the top and right rows lacking diagonal springs, so I iterate through and fix those next. Finally, I iterate through from 2 to x-1 and from 2 to y-1 and add in all the bending springs, which stretch to the spring two above and two to the right of the springs. This again, leaves edge cases, so I iterate through the top and left rows to add the springs necessary.</p>
+
+<h2 align="middle">Part II: Simulation via numerical integration </h2>
+
+<p> In this section, I added in the code that would allow the cloth to move. The simulation code happens in discrete timesteps in a simulate() loop. The simulate function, for every update, is passed a struct that holds several important simulation variables: enable_structural_constraints, enable_shearing_constraints, enable_bending_constraints, damping, density, and the spring_constant. It was my job to integrate these into the simulation on each update step. 
+<br/>
+The first step in the simulation process was adding a loop that takes the external accelerations passed in and adds them to each point masses force vector. Next, I iterate through all springs, and start computing the forces based on Hooks law and the type of spring. Hooks law essentially causes a spring, if the points are currently farther out than the rest-length, to exert and equal and opposite force on each one (pulling them towards each other.) If on the other hand, its pointmasses are within the rest-length, the point-masses are pushed outwards.If a spring is disabled, which I can calculate by checking the enable_NAME_constraints, I do not compute it's contribution. 
+</p>
+
+<p> After all the forces are computed, I then calculate the new positions of the point_masses. If a point_mass is pinned, then it is not updated. The updating process is done using Verlet integration, which simplifies to:
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt2/verlet.png" align="middle" width="400px"/>
+              <figcaption align="middle"></figcaption>
+            </td>
+          </tr>
+      </table>
+</div>
+This process essentially updates the point-masses new position (x at dt + t), based on it's old position (xt), a damping factor (d), the current accereleration, (F/m), and the size of the time step (dt).
+</p>
+<p> 
+In the last part of this section, I integrated in a constraint which helps control excess stretching of springs by constraining the springs to be no more than 10% greater or less than their rest-length. Although seemingly a simple change, this constraint creates a much more physically accurate simulation. The process of constraining them was pretty simple, I simply iterate through all springs and check to see if the vector between it's two pointMasses has a magnitude greater than 10% of the rest length. If this magnitude is greater then I correct the connected pointMasses to be that springs rest-length. There were some edge cases to take care of here: for example if both the points are pinned or the other if a single point is pinned. In the first case, no correction is applied, in the second the correction is applied to the unpinned pointMass.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt2/resting.png" align="middle" width="400px"/>
+              <figcaption align="middle">Final resting place</figcaption>
+            </td>
+          </tr>
+      </table>
+</div>
+<p> 
+  KS tests: parameters held constant: density: 15g/cm^2, damping: .2. <br/>
+  Experiments: 
+  <ul> 
+    <li> 50,000N/M, the cloth fell like I imagine a layer of rubber would fall. </li>
+    <li> 7000N/M Seemed to be super bouncy and behave oddly, like rubber </li>
+    <li> 3000N/M, more like cotton. </li>
+    <li> 100N/M Cloth seemed more like silk.</li>
+  </ul>
+
+  Density tests: parameters held constant: ks: 5000 N/m, damping: .2. <br/>
+  Experiments: 
+  <ul>
+  <li> 1000g/cm^2: was wrinkly, dropped quickly and stiffly, like it was made of lead. </li>
+  <li> 100g/cm^2. Also dropped quickly, seemed to pick up lots of momentum and swing when it reached the bottom of the fall.</li>
+  <li> 10g/cm^2, seemed to fall slower, could see ripples in the fabric as it fell. </li>
+  <li> 1g/cm^2: It fell like how I'd imagine an extremeley thin sheet of rigid paper would fall. Quickly, with very few ripples, and settles quickly.</li>
+  </ul>
+
+  Damping tests: parameters held constant: ks: 5000 N/m, density: 15g/cm^2.<br/>
+  Experiments: 
+  <ul>
+  <li> damping set to 100%. The cloth simply fell slowly then immediately landed in it's resting position, like some cloth that had some ability to think ahead about where it was supposed to go. No swinging occurred.</li>
+  <li> Damping set to 60%. It swung a little at the bottom, but still settled extremeley quickly, and the top barely moved at all. </li>
+  <li>Damping set to 20%. The cloth behaved reasonably realistically, with the default settings, it looks like how a real high quality cotton cloth would fall if the corners were pinned. </li>
+  <li> When damping is set to 0%, man this cloth just likes to swing. It just oscillates back and forth, without any counteracting forces to stop it, surface rippling slightly as it goes. It's probably still swinging today.</li>
+  </ul>
+  Below is the good stuff: pictures of the phenomenon during the experiments. 
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt2/ripples10g.png" align="middle" width="400px"/>
+              <figcaption align="middle">Ripples at 10g/cm^2</figcaption>
+            </td>
+            <td>
+              <img src="images/pt2/wrinkles1000g.png" align="middle" width="400px"/>
+              <figcaption align="middle">Wrinkles at 1000g/cm^2</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt2/wrinkles5n.png" align="middle" width="400px"/>
+              <figcaption align="middle">Wrinkles at 5n</figcaption>
+            </td>
+            <td>
+              <img src="images/pt2/stiff-top50000n.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stiff top at 50000n</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt2/exactd100.png" align="middle" width="400px"/>
+              <figcaption align="middle">Weird stiff fall at damping 100%</figcaption>
+            </td>
+            <td>
+              <img src="images/pt2/swingingd0.png" align="middle" width="400px"/>
+              <figcaption align="middle">Endless swinging at damping 0%</figcaption>
+            </td>
+          </tr>
+      </table>
+</div>
+
+<h2 align="middle">Part III: Collisions </h2>
+<p> In this part I implemented collisions with spheres and planes. Compared to the raytracing assignment collisions, this felt like a walk in the park. Each collision check was pretty simple, all the point masses are iterated through, and if the point has collided with the object, it is corrected to be on the surface of the collision. 
+<p> The sphere collision involved two parts, one to establish if a point was indeed inside the sphere, which you can check by plugging the point into the sphere equation and checking out if it's less than the radius squared, and two, to establish where the point had intersected with the sphere. To do this, I used some of my code from the raytracing assignment. I create a parameterized vector (o + t*d), based on the point-masses last position, and it's current position, and plug it into the sphere equation to solve for t. Because I already checked for collisions, I can safely assume it will always collide with the sphere. Once t is obtained, I can plug it back into the ray equation to the get the position of the intersection point. To allow for a force like friction to be integrated into this, I compute a correction vector between the point-masses last point and intersection point and it's last point and current point. The points position is then updated based on this correction vector multiplied by a damping vector. 
+</p>
+The plane collision was done similarly to the sphere collision. It first involves establishing if a point has 'crossed' the plane, which can be computed by plugging the points into the parameterized plane equation (n*x + po)and checking the sign of the result. If the sign of the result flips, the point has crossed. From here, I compute the intersection time given the parametrized point-mass ray (from old-position to new position, resulting in the vector o + t*d). The interesection t value is simply dot((point - o), normal) / dot(d, normal). Once again, to the get the actual intersection point, I plug in the t value to the ray to get the position. I move the point to this point, then move it up again normal * SURFACE_OFFSET units to prevent rendering issues.
+<br/>
+Below are resting states for the cloth. Essentially, the higher the Ks is, the stiffer the cloth will be.
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt3/at_rest.png" align="middle" width="400px"/>
+              <figcaption align="middle">At rest on the plane: default params</figcaption>
+            </td>
+            <td>
+              <img src="images/pt3/sp_ks_500.png" align="middle" width="400px"/>
+              <figcaption align="middle">Resting at ks = 500N/m</figcaption>
+            </td>
+              
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt3/sp_ks_5000.png" align="middle" width="400px"/>
+              <figcaption align="middle">Resting at ks = 5000N/m</figcaption>
+            </td>
+            <td>
+              <img src="images/pt3/sp_ks_50000.png" align="middle" width="400px"/>
+              <figcaption align="middle">Resting at ks = 50000N/m</figcaption>
+            </td>
+              
+          </tr>
+    </table>
+</div>
+
+<h2 align="middle">Part IV: Handling self-collisions</h2>
+<p> 
+In this part I implemented cloth self-collisions. The problem is essentially similar to the bounding box problem in ray-tracing: how do you efficiently detect what objects are in what space so you can efficiently check for collisions. Unfortunately, each point-mass moves in each frame, so a static BVH like the one we used in the ray-tracing assignment wouldn't work unless constantly updated. Instead, we settle with a spatial hashing algorithm, which segments the scene into a bunch of evenly sized cubes. On each frame, every point-masses position is hashed and it's pointer is inserted into the map at this hash value.
+</p>
+<p>
+There was essentially one hard part to this section, and it was figuring out how to construct the hashes for each 3D position in space. I settled with the int-hashing algorithm hash = (x_ind * 31 + y_ind) * 31 + z_ind, where the x, y and z_indices, is the floor of the position divided by the respective width, height, or depths of the spatial cubes. 
+<br/>
+<br/>
+The rest of the section involved working with this hash to implement efficient collisions. To do this, build_spatial_map had to be written. Build_spatial_map is called on every update, and the function works by iterating through all point-masses, and adding a pointer from the hash_map at the hash of the point-masses position, to the point-mass. At the end of this process, we have a hash-map, each hash of which points to a vector of point-masses. 
+This is our spatial data structure. 
+<br/>
+<br/> To check for collisions, on each update frame I iterate through each point mass again, and check the vector of PointMass pointers associated with it's hash (which translates to the point-masses near it in space). If any of the nearby point-masses are too close, the potential correction, calculated to have a length of 2*thickness, is accumulated in an average correction variable. After I finish checking the point-masses around the relevant point-mass, I move it by the average correction.  
+This method is very efficient! When I checked in my IDE, it seemed that on each iteration I check around 6 neighbors per point-mass, vs 250 checks each when not optimized!
+<br/>
+Below are the stages of self-collision from a run of ../scene/selfCollision.json.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt4/stage1.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 1</figcaption>
+            </td>
+            <td>
+              <img src="images/pt4/stage2.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 2</figcaption>
+            </td>
+              
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt4/stage3.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 3</figcaption>
+            </td>
+            <td>
+              <img src="images/pt4/stage4.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 4</figcaption>
+            </td>
+              
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt4/stage5.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 5</figcaption>
+            </td>
+            <td>
+              <img src="images/pt4/stage6.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 6</figcaption>
+            </td>
+              
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt4/stage7.png" align="middle" width="400px"/>
+              <figcaption align="middle">Stage 7</figcaption>
+            </td>
+              
+          </tr>
+    </table>
+</div>
+<h5>Experiments with parameters </h5>
+<p> 
+Ks experiment: other parameters set to default:
+<ul>
+  <li>When Ks is set to 50000 the cloth is very springy, folding into many smaller folds in the earlier stages of the fall (an effect seen in no other experiments). It appears to have lots of rigidity. </li>
+  <li> When Ks is set to 5, the cloth folds in itself into this undulating mess of springs and triangles, with no rigidity at all.</li>
+</ul>
+
+Density experiment: other parameters set to default:
+<ul>
+<li> Upping the density to 1g/cm^2 caused the cloth to behave like it was extremeley heavy. It compressed itself, and there was no sliding effect that I had seen earlier. The cloth simply fell onto itself and stayed there, still rippling a bit as the collision effects fought against the spring constant effects. </li>
+<li> Lowering the density to 1 g/cm^2 had an opposite effect. The cloth delicately folded over itself, in a very nice way, like it was well, extremely light. </li>
+</ul>
+
+Below are some images of the results of the experiments.
+</p>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="images/pt4/self150g.png" align="middle" width="400px"/>
+              <figcaption align="middle">Folding 150 g/cm^2</figcaption>
+            </td>
+            <td>
+              <img src="images/pt4/self1g.png" align="middle" width="400px"/>
+              <figcaption align="middle">Folding 1 g/cm^2</figcaption>
+            </td>
+              
+          </tr>
+          <tr>
+            <td>
+              <img src="images/pt4/self50000N.png" align="middle" width="400px"/>
+              <figcaption align="middle">Folding at ks = 500000N/m</figcaption>
+            </td>
+            <td>
+              <img src="images/pt4/self5N.png" align="middle" width="400px"/>
+              <figcaption align="middle">Folding at ks = 5N/m</figcaption>
+            </td>
+              
+          </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

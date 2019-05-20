@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <style>
+      body {
+      padding: 100px;
+      width: 1000px;
+      margin: auto;
+      text-align: left;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: #121212;
+      }
+      h1, h2, h3, h4 {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  
+      }
+    </style>
+    <title>CS 184 Final Project</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet"> -->
+  </head>
+
+
+  <body>
+    <h1 align="middle">2D Particle Based Motion Interactive Fluid Simulation</h1>  
+    <div align = "middle">
+      <table style="width=100%">
+	<tr>
+          <td>
+            <img src="images/bluefluid.png" align="middle" width="400px"/>
+            <figcaption align="middle"></figcaption>
+          </td>
+          
+	</tr>
+      </table>
+    </div>
+    <h2>Abstract</h2>
+    <p>
+      Particles system can be used to simulate a range of fluids or gases. However, we didn’t see many real time interactive applications that allow user input from hands directly. In this paper, we present modules and implementations of how we enables an interactive water simulation, where user’s head or hand can be used as input to manipulate fluid simulated. We attempt to simulate and render particles by repurposing the GPU from the rasterization process. Instead of drawing 3D geometry to screen, we are instead using the GPU as a massively parallel processor for rendering and simulation.
+    </p>
+    <h2>Introduction</h2>
+    <p>
+      Interactive experience is usually more entertaining for both users and the audience. This is done in a combination of back end calculation, rendering, front end cue for users, as well as user input capture. We choose to work on fluid interactive simulation for various reasons. Being visually cool aside, recent years computation power of computer increases significantly. It allows rendering a large amount of particles with unperceivable latency. The GPU is a massively parallel processor, with many pipelines that are specifically optimized to do math involving graphics. Fluid simulation, fortunately, can be parallelized and takes advantages of it. The advancement of GPU processing power allows rendering highly detailed and realistic fluids to be possible. 
+      On interaction side, similar progress has been made on computer vision. Open source community has accumulated a wealth of information on various computer vision. Tracking, for example, is one of the most well studied field and would serve as basis for our input mechanism. 
+    </p>
+
+    <h2>Literature Review</h2>
+    <p>
+      Simulating fluid itself has been well studied before. Braley et al. [1] gives an brief overview of the math to simulating fluid. He explained both grid based solution as well as particle based solution. The grid based solution can achieve higher efficiency and better result, but harder to implement. The basic idea for grid based system is to divide the entire simulated physical space into different small virtual boxes. Therefore, it’s relatively easy to look up neighbors for a given query coordinate. Particle system, on the other hand, stores an array of particles that makes up the fluid in the scene, and records their positions in the particle data structure. This is easier to implement and understand but takes longer to query nearest neighbors.
+      To translate 2D discrete particle system to more realistic fluid geometry, we referenced Yu et al.’s work [2] by utilizing metaball in order to create a simulated water effects based on whether and how each pixel is occupied, to create a blobby effect and thus more similar to water.
+    <p/>
+
+
+    <h2>Our Methods</h2>
+    <p>
+      We divided our project into three separate modules. The physics module computes locations of each particles in float precision. In calculation of forces exert on each particle, we also include external force generated from computer vision module, which tracks head and hand positions. Finally, at every frame, updated position of each particle is sent to rendering for visualization.
+    </p>
+
+    <h2>Module 1: Shaders</h2>
+    <p>
+     Our first solution at a metaballs shader used only a fragment shader. We passed in the entire float array of positions to our shader, and for each pixel on the screen, ran through all of the particle positions and found the closest matching particle. This resulted in extremely slow rendering so we changed our strategy.
+	  </p>
+	  <p>
+Our second and final solution involved rendering the particles by using GPU billboard instancing. We first create a simple plane VAO with four vertices, which we treat as the geometry to be instanced. During each render call, we bind the VAO, then bind the new VBO to our vertex shader, with all the particle positions in it. We also bind a second new VBO to our vertex shader with all the particle colors in it. Next, we call glDrawElementsInstanced, which, given a little meta-data specified during the VBO instantiation, renders each particle in a different position with a different color. The fragment shader for each particle simply takes in a texture and renders it normally. 
+To achieve thresholding on the alphas (which results in the nice blobby look we were going for), before the instance render call, we bind a texture to a new framebuffer, and bind this new framebuffer. The particles now render to this new texture. Afterwards, we bind the default framebuffer, and render a plane on top of the screen using the texture that we created from the first render call. In the fragment shader for this plane, it simply takes in a texture, and outputs the color at that texture if the alpha is greater than .5. Voila, metaballs. This strategy also allows some control over the metaball look, varying the falloffs and colors results in different behaviours shown below.
+    </p>
+    <div align = "middle">
+      <table style="width=10%">
+        <tr>
+          <td>
+            <img src="images/bluefluid.png" align="middle" width="400px"/>
+            <figcaption align="middle">Blue falloff</figcaption>
+          </td>
+          <td>
+            <img src="images/redfluid.png" align="middle" width="400px"/>
+            <figcaption align="middle">Red falloff</figcaption>
+          </td>     
+        </tr>
+      </table>
+    </div>
+    <div align = "middle">
+      <table style="width=10%">
+        <tr>
+          <td>
+            <img src="images/metaball-color.png" align="middle" width="400px"/>
+            <figcaption align="middle"></figcaption>
+          </td>
+          <td>
+            <img src="images/m3.png" align="middle" width="400px"/>
+            <figcaption align="middle"></figcaption>
+          </td>     
+        </tr>
+      </table>
+    </div>
+
+    <h2>Module 2: Particle Physics</h2>
+    <p> Physics of the fluid is approximated using particle based simulation based on incompressible Navier-Stokes equations[3]. We are using a simple simulation called Smoothed Particle Hydrodynamics (SPH) [5]. To start, we create a finite amount of particles, with each particle containing its position, velocity, density, pressure as well as the force exerted on it. Each particle is initialized at a location with certain random minor variables. Their velocity and force are set to be zero. At every frame, three sequential calculations are performed on each particle. </p>
+    <ol>
+      <li>Update nearest neighbors within certain radius for each particle: Since in SPH, calculation of each particle’s properties in each frame is largely dependent on its nearest neighbors within certain radius. We need to get a list of nearest neighbors that is within the spherical space. Naive approach is to simply loop through all particles in the space, calculate the distance to query point, and save them if they are close. This approach won’t scale as it’s O(n^2) time per frame, which significantly defeated our purpose of making it real time.
+	<ol>
+	  <b> Optimization process:</b>
+          <li> 
+            Build Spatial Grid: Inspired by grid based alternative to simulate fluid, which is great for search nearest neighbors, we divided the 2D screen space into multiple grids with size of radius by radius. Each particle is assigned to a map of spatial grid, based on following equation to calculate the grid it belongs to:
+            floor(x/r) + floor(y/r) * width, where x is query point’s x coordinate in float
+          </li>
+          <li>
+            Then, for every query point, we search the other points within its grid, as well as the 8 grids surrounding the grid that this query point is in. Since we are only interested in points within radius distance away, and grid side length is same as radius, any point that is not part of these 9 grids (including grid query point is in) can be safely discarded. Then, it’s simply calculating the distance for every point in the 9 grids and check if they are within that radius to query point. Please see Figure 1 for more details. Then, we save the pointers of these neighbors to each particle for easy retrieve in later process.
+          </li>
+	</ol>
+      </li>
+      <br/>
+      <br/>
+      <li>Calculate force exerted on each particle. This is done by finding all neighbors that contributes to a particle’s pressure force and viscosity force, subject to kernel described in [4], and then added to gravitational force and human made external force from HCI module.</li>
+      <li>Numerical integration to get final particle positions. Once all the information is obtained as described above, we use simple F=ma to obtain the acceleration on each particle resulting from force, and does a simple Euler’s method to approximate the updated particle location, subject to boundary conditions. Meaning if the particle goes out of bound, its position got pulled back and its velocity got reduced by half to simulate an energy loss effects upon contacting with virtual ground or wall.</li>
+    </ol>
+
+    <div align = "middle">
+      <table style="width=100%">
+        <tr>
+          <td>
+            <img src="images/searching.png" align="middle" width="400px"/>
+          </td>
+          
+        </tr>
+      </table>
+      <p align="middle"><b>Figure 1:</b> In this example, red dot is our query point, and red square includes the 9 grids that its nearest neighbors can possibly in and considered, with each grid side length equal to the search radius. Green circle has center of query point and radius same as search radius, and every point within green circle as considered actual neighbors, whereas every yellow dots are not.</p>
+    </div>
+    <h3> Gifs of fluid iterations over time.</h4>
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/SorrowfulSimpleHomalocephale' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3 align = "center'"> Closest pixel shading and buggy implementation</h3>
+
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/WatchfulComfortableDromaeosaur' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3 align = "center'"> Broken meta-ball shader</h3>
+
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/RealDefenselessDikkops' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3 align = "center'"> Metaball with GPU instancing, first pass only</h3>
+
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/AfraidDelightfulAmericanrobin' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3 align = "center'"> Metaball with GPU instancing, with alpha thresholding</h3>
+
+    <h2>Module 3: HCI</h3>
+    <p>
+      Our design methodology was to seek out the most intuitive interaction possible with the fluid through OpenCV input. After some observation and questions to individuals, we realized the first response a person would have was to try run their hands through the fluid. Based on this, we started researching basic hand tracking algorithms. 
+    </p>
+    <p>
+      The first iteration we went through involved HSV conversion of our video stream, and thresholding based on the values of human skin color to identify the hand. From there, you can track ‘hands’ using contour extraction and some basic area heuristics. Unfortunately, the tuning of these parameters would change depending on lighting and the person’s skin color in question, so we abandoned this strategy. 
+    </p>
+    <p>
+      Next we began experimenting with optical flow, [8] an algorithm which tracks pixel motion over time. This algorithm generates a full grid of motion values, which we thought could possibly work well as form of interaction with a grid based fluid simulation. After some experimentation, we realized that optical flow works better on large gradients, and would only generate flows around the edges of objects. Furthermore, it would generate stronger motion fields around the hair and clothing of the person trying to interact with the simulation, rather than their moving hand. We put this strategy on hold to pursue more robust options. 
+    </p>
+    <p>
+      Our third iteration involved a naive face tracker, which uses a HAAR cascade to track faces. We were surprised at the stability and robustness of this algorithm, and its ability to support multiple faces at once. It rarely drops faces once detected, which allows for computation of motion vectors between frames. This stability was what we were searching for, it turns out stable, predictable behaviour was the key to defining a good interaction scheme with the fluid.
+    </p>
+    <p>
+      We made a fourth attempt to get hand interaction working. Due to our success with the face tracker, we experimented with some HSV auto-thresholding based on the average color of the faces it detected. This attempt was a combination of our first and third strategies, and we hoped this auto-thresholding could allow for robust hand tracking. Unfortunately, it did not, hands against variable backgrounds were often lost, leading to unpredictable behaviour, which ruined the immersion of the interaction.
+    </p>
+    <p>
+      Our final and fifth attempt came after implementing the jelly-like final fluid: we realized that averaging the total optical flow over the image gave an incredibly accurate and intuitive interaction, solving our interaction problems within our design constraints. The result was  performant, intuitive, and was highly entertaining to use. We then added in visual feedback for the speed of particles, coloring them based on velocity. [7]. 
+    </p>
+    <h4> GIFs of the input iterations over time.</h4>
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/PessimisticOccasionalArctichare' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3> HAAR facetracking </h3>
+
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/CriminalScrawnyCardinal' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3> Naive optical flow </h3>
+
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/ThirdJauntyHarvestmouse' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3> HSV autosegmentation </h3>
+    <div style='position:relative;padding-bottom:24%'><iframe src='https://gfycat.com/ifr/PopularMeagerBuck' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+    <h3> Optical flow averaging </h3>
+    <h2>Results</h2>
+    <a href="https://www.youtube.com/watch?v=0MGD58p-7Yg&feature=youtu.be">Link to our video</a>
+    
+    <h2>Further Improvements</h2>
+    <p>
+      While our current demo successfully illustrates functionality of the project and interactiveness, there are still quite a lot parts to be improved. 
+      First, the appearance of the liquid still does not look realistic. The way we implemented shader through metaball is rather a hack and does not accurately reflect physical property of the liquid. To further improve that, more research need to be done on shader to calculate color of the liquid particle based on its density as well as its speed.
+      Second, the way we implemented human computer interaction is also suboptimal. In the original proposal, we were planning to get an accurate hand tracking, and allow user to use their hands to lift certain amount of water as if it’s real. This is also one of the first reaction that we found people tend to do during demo. We resorted to average optical flow due to unreliability of the hand tracking based on pure RGB data. Although there are current state of art approach, which detect user’s skin color and, based on that, segment hand from the scene. It is still proven to be unreliable and slow in computation. Instead, using RGB-D data from depth sensor should improve the result. Another alternative is based on deep learning. Utilizing OpenPose [6] published by CMU, it can achieve relatively accurate estimation purely based on RGB data, although current implementation might be too slow for real time performance.
+    </p>
+
+    <h2>Team Members</h2>
+    <ul>
+      <li>Brian Aranowitz : handled HCI and openCV</li>
+      <li>Will Huang: handled particle physics and optimization</li>
+      <li>Stephen Jayakar: handled writing shaders</li>	
+    </ul>
+      
+
+
+    <h2>References</h2>
+    <ul>
+      <li>[1] <a href="http://users.encs.concordia.ca/~grogono/Graphics/fluid-5.pdf">Fluid Simulation Overview</a> </li>
+      <li>[2] <a href="https://www.sciencedirect.com/science/article/pii/S009784939900031X">Fluid blobby effects from particle system</a></li>
+      <li>[3] <a href="http://bigtheta.io/2017/07/08/implementing-sph-in-2d.html">Physics behind fluid simulation</a></li>
+      <li>[4] <a href="http://matthias-mueller-fischer.ch/publications/sca03.pdf">More details on physics behind fluid simulation</a> </li>
+      <li>[5] <a href="https://link.springer.com/article/10.1007/s11831-010-9040-7">SPH overview</a> </li>
+      <li>[6] <a href="https://github.com/CMU-Perceptual-Computing-Lab/openpose">openPOSE</a> </li>
+      <li>[7] <a href="http://people.ischool.berkeley.edu/~hearst/irbook/10/node3.html">HCI interactions</a> </li>
+      <li>[8] <a href="http://www.cs.toronto.edu/~fleet/research/Papers/flowChapter05.pdf">optical flow paper</a> </li>
+    </ul>
+
+    
+
+  </body>
+</html>
