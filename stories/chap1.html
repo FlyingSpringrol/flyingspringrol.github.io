@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <style>  
+  div.padded {  
+    padding-top: 0px;  
+    padding-right: 100px;  
+    padding-bottom: 0.25in;  
+    padding-left: 100px;  
+  }  
+  body {
+  padding: 100px;
+  margin: auto;
+  text-align: left;
+  font-weight: 300;
+  font-family: 'Crimson Text', serif;
+  color: #121212;
+  }
+  h1, h2, h3, h4 {
+  font-family: 'Crimson Text', serif;
+  }
+  </style> 
+<title>Brian's work 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">What I did at PantheonVR</h1>
+<h3 align = "middle"> and the design lessons I took away.</h3>
+
+<br/>
+
+<h3>TLDR: General design principles</h3>
+<ul> 
+  <li>define the problem first, understanding the constraints and needs. All good design comes from understanding the problem.
+ </li>
+ <li> People want things to be easy. Avoid swamping them with learning, wild gestures, and things that require energy expenditure.  </li>
+ <li> Nothing is “intuitive.” Intuition is mostly based on past experience with technology.</li>
+</ul>
+<h3>TLDR: General VR design principles</h3>
+<ul>
+  <li> With VR, when in doubt, use 2D interfaces. See: Nothing is intuitive.</li>
+  <li> Simple VR menu: keep things simple. Make things Apple-esque if you want them to be “intuitive”. Reasoning: (The iPhone menu design has pervaded everything: therefore, to make a menu intuitive you can just follow it's example.) </li>
+  <li> Gaze based interaction paradigm: left and right motion is perfect and precise. Up and down motion is horribly painful. Simple physiological constraints of the human head and neck.</li>
+  <li> Avoid having people read things in VR. Eye strain is real: Vergence-accomodation already makes it bad: straining to read text on pixels is even worse</li>
+  <li> Creating immersion: Small objects close to a person, and big objects far seem to work the best. </li>
+  <li> Photorealism is not the way to create immersion: cohesive world design is.</li>
+  <li> Nothing breaks immersion quite like physical discomfort: motion sickness, eye strain, all add to breaking immersion. </li>
+
+</ul>
+</br>
+<h2 align="middle">Part I: My beginning</h2>
+
+<p>My story of design and computer science starts as I turned 20. My friend and I were sitting around one day talking, and I asked him if it would be possible to teach biology in VR. 
+I spent the next three months learning Blender and Unity3D so we could create a biology-learning VR experience.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/Cell1.png" align="middle" width="400px"/>
+              <figcaption align="middle">Neurons in VR</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/Cell2.png" align="middle" width="400px"/>
+              <figcaption align="middle">First UI</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> Passive viewing videos are here, screen recorded from my DK2 on my terrible graphic card. </p>
+<a href = "https://www.youtube.com/watch?v=MzsP0DX4ff0"> VR Plant Tissue</a>
+<br/>
+<a href = "https://www.youtube.com/watch?v=7Tv3mC9fe1A"> VR Neurons</a>
+
+
+<p>We realized quickly that we needed an interaction paradigm, that just passively viewing models in VR was just scratching the surface of what this technology could do.
+So we went back to the drawing board, and redesigned everything.
+I 3D modeled some cells, as we decided that cells would be a fine application for VR learning.
+We then slapped a leap motion on the front of our DK2, and designed an application where you could interact with the cells in VR.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/Cell3.png" align="middle" width="400px"/>
+              <figcaption align="middle">Cell Concept Render</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/Cell4.png" align="middle" width="400px"/>
+              <figcaption align="middle">Leap Motion Interaction</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/Cell5.png" align="middle" width="400px"/>
+              <figcaption align="middle">Inside the VR</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<h2 align="middle">Part II: An (un)fortunate pivot </h2>
+
+<p> While the application was compelling, we faced a choice. Do we continue meticulously modeling all the parts of the body in VR, or do we continue and try to build this into a technology company?
+</p>
+<p>
+<b> We pivoted.</b> (You’ll see this as a recurring trend throughout my story, and do this day I’m not 100% sure if these pivots were ever a good idea.)
+</p>
+<p>
+Over the course of this cell project, we had realized that the entire pipeline to create these models was long and complicated. We had to 3D model in Blender, Texture in Quixel and Photoshop, then finally port it to Unity3D, where we would have to program interactions and create shaders for our models. We realized that theoretically it would be possible to compress it into a single standalone application, so that’s what we set out to create.
+</p>
+<p> 
+<b> This was the start of my design career. </b>
+I would start to devour design books and posts. The Design of Everyday Things would become my bible.
+<p>
+We decided to start with a head based interface for our 3D modeling application, (this was before the days of the Oculus touch, and the leap motion was as poorly supported as it is today.) We also reasoned with a simple head based interface, we could easily extend our application to mobile VR as it started to diffuse to consumers.
+I was in charge of designing the menu.
+</p>
+<p>
+  <h3>
+The constraints of the menu I was working with were as follows:
+</h3>
+  <ul>
+  <li>Must be extensible, and allow for addition of many tools and systems</li>
+  <li>Must be “intuitive”</li>
+  <li>Must be navigable with just a gaze and click interface</li>
+  </ul>
+</p>
+
+<p>
+I decided to rip the idea of clickable icons from the iPhone home screen. 
+I still believe to this day, that all great “intuitive” actions are built from the mental models inside of peoples heads, that already exist. Apple’s design has become so ubiquitous that just following peoples intuition for clicking can save hours of onboarding and user errors.
+</p>
+<p>
+So I designed this UI.
+I’m happy with the design paradigm I chose, it was almost infinitely extensible, and seemed intuitive. 
+</p>
+<p>
+Looking back, I think I did many things right as far as the UI went. 
+The design was friendly, and happy. With simple colors, and a welcoming font. 
+I ran about 100 people through in usability tests, and it passed most of them. 
+I’m happy with how it turned out. 
+</p>
+
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/UI1.png" align="middle" width="400px"/>
+              <figcaption align="middle">Cell Concept Render</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/UI2.png" align="middle" width="400px"/>
+              <figcaption align="middle">Leap Motion Interaction</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/UI3.png" align="middle" width="400px"/>
+              <figcaption align="middle">Inside the VR</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> 
+  The interactions of scaling, rotating, and moving, on the other hand, were a disaster. 
+  I kept the gaze based interaction paradigm, so you basically had to violently turn your head to rotate and scale objects. 
+  While people said it was “intuitive” after a while, the sheer pain of up and down motion using a head based interface simply made this an infeasible interaction. 
+  If I was going to go back and redesign these, I would stick with a joystick based interaction. 
+</p>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/int1.png" align="middle" width="400px"/>
+              <figcaption align="middle">Cell Concept Render</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/int2.png" align="middle" width="400px"/>
+              <figcaption align="middle">Leap Motion Interaction</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/int3.png" align="middle" width="400px"/>
+              <figcaption align="middle">Inside the VR</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<h2 align="middle">Part III: Moving Forward </h2>
+<p>
+  One day, at the incubator we were working at, there was this posting for office hours with some Venture Capital firm called “YCombinator”. I didn’t think too much of it, as I had no idea what YCombinator was. 
+I mentioned at lunch to my friend and he spit out his Chipotle.
+<p>
+“DUDE. WHAT?! YOU'VE BEEN READING HACKERNEWS FOR THREE YEARS HOW DO YOU NOT KNOW WHAT THAT IS”.
+</p>
+So after he laughed at me for a little, we applied to the office hours with Qasar Yoonis, the COO of YCombinator.
+We showed pantheon to Qasar. It seemed he loved it, singing the Star Wars theme song as he flew around in circles. 
+ </p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/qasar.png" align="middle" width="400px"/>
+              <figcaption align="middle">Qasar</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+
+<p>
+We applied to YC, pitching our vision of democratized content creation in VR.
+We would get in, and a month later we would move to Silicon Valley.
+     
+ </p>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/team.png" align="middle" width="400px"/>
+              <figcaption align="middle">The team</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> 
+  They put me in charge of continuing to build interactions, building expansive sprawling scenes to show the power of VR and our application, and to use these creations to market our application to the world. 
+</p>
+<p>
+So I did my best to communicate the promise of a tool that could express the human imagination. 
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap1/Pantheon1.png" align="middle" width="800px"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/Pantheon2.png" align="middle" width="800px"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap1/Pantheon3.png" align="middle" width="800px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> Although I was pretty proud of the work I was doing, the story ends here.
+After released the project onto the Oculus store, we finally began to realize that the market for VR had been grossly overestimated and overhyped by independent analysts, Oculus Marketing, and Vive. 
+I knew this 3D modeling product wouldn’t work.
+</p>
+<p>
+About a month into the program, I left PantheonVR and returned to school.
+Hammad, Sonia and Neha, would pivot to AR content creation, and would be acqui-hired by Ubiquity6 a year later. 
+</p>
+
+
+
+</body>
+</html>

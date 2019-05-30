@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <style>  
+  div.padded {  
+    padding-top: 0px;  
+    padding-right: 100px;  
+    padding-bottom: 0.25in;  
+    padding-left: 100px;  
+  }  
+  body {
+  padding: 100px;
+  margin: auto;
+  text-align: left;
+  font-weight: 300;
+  font-family: 'Crimson Text', serif;
+  color: #121212;
+  }
+  h1, h2, h3, h4 {
+  font-family: 'Crimson Text', serif;
+  }
+  </style> 
+<title>Brian's work 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">What I did at PengramAR</h1>
+<h3 align = "middle"> and the design lessons I took away.</h3>
+
+<br/>
+
+<h3>TLDR: General design principles</h3>
+<ul> 
+  <li> Talk to your users. Always, and constantly.</li>
+  <li> Read research papers: for example, VR/AR has been around for 60 years, and there are thousands upon thousands of experiments that have been done and published. Save yourself work. </li>
+</ul>
+<h3>TLDR: General Hololens design principles</h3>
+<ul>
+  <li> Hololens usability is a huge issue, always consider UI learning factors, device, weight, battery length, price. Think of it as a demo tool, not a industry ready device. </li>
+  <li> Key feature: Novelty of AR: it seems almost magical to the new user. </li>
+</ul>
+<h3>TLDR: General mobileAR design principles </h3>
+<ul> 
+  <li> MobileAR can be nearly frictionless, if onboarding designed correctly </li>
+  <li> For marker scanning/ using image markers: stick with a QR code. Most people already know how to scan one. </li>
+  <li> Making instructions in a 3D way removes ambiguity: This is an incredible use case </li>
+  <li> Indoor/Outdoor navigation is also an incredible use case for MobileAR. </li>
+  <li> AR itself is highly engaging: the value of engagement is as tangible as the other benefits of AR </li>
+  <li> Drawback 1: drift (AR applications will accumulate error over time), leading to instructions that float off of where they are supposed to be </li>
+  <li> Drawback 2: Occlusion: an incredibly important depth estimation cue that the brain uses: that does not exist in most AR [need mesh construction of objects].
+</li>
+  <li> Drawback 3: Shadows: another incredibly important depth estimation cue that the brain uses. AR objects will not interact with real objects.</li>
+
+</ul>
+</br>
+<h2 align="middle">Part I: Recovering Startup Addict</h2>
+
+<p>
+  After leaving PantheonVR, and beginning my slow startup recovery process, my friend approached me with a VR/AR problem of his own.
+The startup he was working on, built out of Berkeley’s Center for Augmented Cognition, had started to have VR design issues. 
+</p>
+<p>
+  They needed some better interaction paradigms. I agreed: their main interaction tool was an enormous red sphere attached to a hand. 
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/hand1.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> They need me to design a tool that would allow for several things. Not one to back down from a design challenge, especially with VR, I said yes. </p>
+<h3> The constraints were: </h3>
+<ul>
+  <li> Needed a constraint for the hand that wouldn’t impede grabbing </li>
+  <li> The tool needed to be able to draw and paint. </li>
+  <li> I designed a type of ‘hand gun’, something that would allow for both intuitive grabbing, as well as drawing, painting, and other tool use. 
+  </li>
+</ul>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/hand2.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p>They also needed me to design an environment for the VR side of their telepresence application. I came up with an infinite grid like structure, under a nice sky.
+I based this design mostly off the Oculus Medium design blog.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/grid1.png" align="middle" width="700px"/>
+              <figcaption align="middle">Grid Design</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> 
+They also wanted me to improve their avatars, so I came up with a better design for the floating avatar.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/operator1.png" align="middle" width="400px"/>
+              <figcaption align="middle">original</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> My refinements. I added more definition to the head, and added a headset to the operator.  
+</p>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/operator2.png" align="middle" width="400px"/>
+            </td>
+            <td>
+              <img src="chap2/operator3.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> I added a wireframe to the avatar, to add a more futuristic look. </p>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/operator4.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> In this time, the core founding members would take the project to Microsoft's imagine cup, winning first place at U.S nationals, and going on to worlds. </p>
+
+<h2 align="middle">Part II: Another pivot? </h2>
+
+<p> Although we had received a variety of good signals from Microsoft about the state of the project, it was at this point in the project when we decided to consider a pivot. We had talked to about 20 companies at this point, and had dragged out negotiations with Siemens for over 9 months. There simply was no need for our solution: nothing justified the friction of VR operation and AR viewing.
+</p>
+
+<p>
+To this day I don’t know if this was the right decision. Still, I think the signals showed that pursuing a hololens based telepresence app would hurt us in the long run. During our pivot discussions, I fought for an easier to use platform, insisting iPad and ARKit was the place to go with our product. 
+After weeks of discussion, I was given the go ahead to build a prototype of a lightweight AR application for instructional delivery.
+</p>
+<p>
+I built the first prototype for our “augmented sequence instructions.”
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug1.png" align="middle" width="400px"/>
+              <figcaption align="middle">original</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> The idea was that someone would be able to see instructions through their iPad, and be able to interact with the machines. 
+I used Unity3D to create the AR experience, which had a wrapper around ARKit1.5. </p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug2.png" align="middle" width="400px"/>
+              <figcaption align="middle">Inside view through iPad</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug3.png" align="middle" width="400px"/>
+              <figcaption align="middle">Conceptual view</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> The whole pitch involved both a creation and consumption side for these instructions.
+What I had prototyped was just the “Consumption” side of the instructions, but what we really needed was the “Creation” side, to allow for the design specialists to create their own AR instructions easily, without a need for Unity or Photoshop.  </p>
+<p> The team sat down together, and I led a white boarding session. By the end, we had designed the creation side of the application. 
+I tried to boil it down to it’s absolute essentials.
+The fact you could put it onto a single page felt like we had succeeded in coming up with a simple and usable design for creation and consumption of AR instructions. </p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug4.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug5.png" align="middle" width="400px"/>
+              <figcaption align="middle">Always thought this hand was genius. But alas, never made it into the final app.</figcaption>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> We allocated work, and then started building. 
+By the end of the semester, we had an application that could easily make and deliver instructions. We delivered it to Jacobs hall and called it a day.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug6.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap2/aug7.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p>The final video of the AR Instructions Application is <a href="https://www.youtube.com/watch?v=ysEk7nFayCI&feature=youtu.be"> here. </a></p>
+<h2 align="middle">Part III: The end. </h2>
+<p>I collected all our learnings into this research folder over the course of the nine months on the Hololens and mobileAR aspects of our project.
+It encompasses business, design, and engineering possibilities. 
+</p>
+<a href="https://drive.google.com/open?id=1JQMwZjna0CZPPSIw-nl260wlj8gNpHvp">Link to research folder</a>
+<p> This is my favorite piece of the research, spent the most time on it, and I think it captured the state of AR instructions pretty well. </p>
+<a href = "https://drive.google.com/file/d/1R6DD5IQc9XlSzLuoQpgnt4e5ASNBpawg/view?usp=sharing"> Link to doc </a>
+<p> After the semester ended, Bryce, Vedant and Lear would leave to work at Apple.
+Luke would leave for Facebook. </p>
+<p> Bill, Will, and Charles pitched the product to YC, and would be accepted. They would take the same journey I had a year prior.
+They pivoted to an indoor navigation tool. </p>
+<a href = "https://www.pengramar.com/" > https://www.pengramar.com/ </a>
+<p> 
+As for me, well, I would leave for Berlin for four months. I knew I’d regret not going. So I packed up my stuff, and left for the graffiti covered streets of Berlin.
+</p>
+</body>
+</html>
