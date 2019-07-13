@@ -1,29 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <style>
       body {
       padding: 100px;
       width: 1000px;
       margin: auto;
       text-align: left;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: 'Nanum Gothic', sans-serif;
       font-size: 18px;
       font-weight: 500;
       color: #121212;
       }
       h1, h2, h3, h4 {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  
+      font-family: 'Nanum Gothic', sans-serif;
       }
     </style>
     <title>CS 184 Final Project</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet"> -->
+
   </head>
 
 
   <body>
-    <h1 align="middle">2D Particle Based Motion Interactive Fluid Simulation</h1>  
+    <h1 align="middle">Interactive Fluid Simulation</h1>  
     <div align = "middle">
       <table style="width=100%">
 	<tr>
@@ -35,22 +36,6 @@
 	</tr>
       </table>
     </div>
-    <h2>Abstract</h2>
-    <p>
-      Particles system can be used to simulate a range of fluids or gases. However, we didn’t see many real time interactive applications that allow user input from hands directly. In this paper, we present modules and implementations of how we enables an interactive water simulation, where user’s head or hand can be used as input to manipulate fluid simulated. We attempt to simulate and render particles by repurposing the GPU from the rasterization process. Instead of drawing 3D geometry to screen, we are instead using the GPU as a massively parallel processor for rendering and simulation.
-    </p>
-    <h2>Introduction</h2>
-    <p>
-      Interactive experience is usually more entertaining for both users and the audience. This is done in a combination of back end calculation, rendering, front end cue for users, as well as user input capture. We choose to work on fluid interactive simulation for various reasons. Being visually cool aside, recent years computation power of computer increases significantly. It allows rendering a large amount of particles with unperceivable latency. The GPU is a massively parallel processor, with many pipelines that are specifically optimized to do math involving graphics. Fluid simulation, fortunately, can be parallelized and takes advantages of it. The advancement of GPU processing power allows rendering highly detailed and realistic fluids to be possible. 
-      On interaction side, similar progress has been made on computer vision. Open source community has accumulated a wealth of information on various computer vision. Tracking, for example, is one of the most well studied field and would serve as basis for our input mechanism. 
-    </p>
-
-    <h2>Literature Review</h2>
-    <p>
-      Simulating fluid itself has been well studied before. Braley et al. [1] gives an brief overview of the math to simulating fluid. He explained both grid based solution as well as particle based solution. The grid based solution can achieve higher efficiency and better result, but harder to implement. The basic idea for grid based system is to divide the entire simulated physical space into different small virtual boxes. Therefore, it’s relatively easy to look up neighbors for a given query coordinate. Particle system, on the other hand, stores an array of particles that makes up the fluid in the scene, and records their positions in the particle data structure. This is easier to implement and understand but takes longer to query nearest neighbors.
-      To translate 2D discrete particle system to more realistic fluid geometry, we referenced Yu et al.’s work [2] by utilizing metaball in order to create a simulated water effects based on whether and how each pixel is occupied, to create a blobby effect and thus more similar to water.
-    <p/>
-
 
     <h2>Our Methods</h2>
     <p>
@@ -181,9 +166,8 @@ To achieve thresholding on the alphas (which results in the nice blobby look we 
 
     <h2>Team Members</h2>
     <ul>
-      <li>Brian Aranowitz : handled HCI and openCV</li>
+      <li>Brian Aronowitz : handled HCI and openCV</li>
       <li>Will Huang: handled particle physics and optimization</li>
-      <li>Stephen Jayakar: handled writing shaders</li>	
     </ul>
       
 
