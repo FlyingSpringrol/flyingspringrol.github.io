@@ -20,22 +20,105 @@
   font-family: 'Crimson Text', serif;
   }
   </style> 
-<title>Brian's work 2</title>
+<title>Pengram AR: Product Pivot</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
 </head>
-
-
 <body>
-
-<h1 align="middle">The two years building an AR art exhibit</h1>
+<h1 align="middle"> Building an Mobile Augmented Reality Creation Tool</h1>
 <h3 align = "middle"> and the design lessons I took away.</h3>
-<a align = "middle" href="https://bampfa.org/program/bampfa-ar-augmented-time">Link to BAMPFA page</a>
-<br/>
-<p> ... this page is still being written. currently working on compiling everything into a coherent design story.  </p>
 
+<p>The video of the AR Instructions Application is <a href="https://www.youtube.com/watch?v=ysEk7nFayCI&feature=youtu.be"> here. </a></p>
+
+<p> Project abstract: After half a year of building our product on Hololens, we pivoted to build a content creation tool for Mobile AR on iPad, designed specifically for makerspaces. </p>
+
+<p> Our justification was that the user friction involved with developing a dual VR/AR tool for Hololens and Oculus VR was simply too much to have a viable product. Mobile AR on the other hand had the potential to be ubiquitous, and buying into the Apple AR ecosystem had the potential for growth as they released better software and hardware. </p>
+<br/>
+
+<h3>TLDR: General mobileAR design principles </h3>
+<ul> 
+  <li> MobileAR can be nearly frictionless, if onboarding designed correctly </li>
+  <li> For marker scanning/ using image markers: stick with a QR code. Most people already know how to scan one. </li>
+  <li> Making instructions in a 3D way removes ambiguity: this is the prime use case for AR</li>
+  <li> Indoor/Outdoor navigation is also an incredible use case for MobileAR. </li>
+  <li> AR itself is highly engaging: the value of engagement is as tangible as the other benefits of AR </li>
+  <li> Drawback 1: drift (AR applications will accumulate error over time), leading to instructions that float off of where they are supposed to be </li>
+  <li> Drawback 2: Occlusion: an incredibly important depth estimation cue that the brain uses: that does not exist in most AR [need mesh construction of objects].
+</li>
+  <li> Drawback 3: Shadows: another incredibly important depth estimation cue that the brain uses. AR objects will not interact with real objects.</li>
 
 </ul>
 </br>
+
+<h2 align="middle">Building an Augmented Reality Creation Tool  </h2>
+
+<p>
+I built the first prototype for our “augmented sequence instructions.”
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug1.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> The idea was that someone would be able to see instructions through their iPad, and be able to interact with the machines. 
+I used Unity3D to create the AR experience, which had a wrapper around ARKit1.5. </p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug2.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug3.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+
+<p> The whole pitch involved both a creation and consumption side for these instructions.
+What I had prototyped was just the “Consumption” side of the instructions, but what we really needed was the “Creation” side, to allow for the design specialists to create their own AR instructions easily, without a need for Unity or Photoshop.  </p>
+<p> The team sat down together, and I led a white boarding session. By the end, we had designed the creation side of the application. 
+I tried to boil it down to it’s absolute essentials.
+The fact you could put it onto a single page felt like we had succeeded in coming up with a simple and usable design for creation and consumption of AR instructions. </p>
+
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug4.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+<p> We allocated work, and then started building. 
+By the end of the semester, we had an application that could easily make and deliver instructions. We delivered it to Jacobs hall and called it a day.
+</p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/aug6.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="chap2/aug7.png" align="middle" width="400px"/>
+            </td>
+          </tr>
+    </table>
+</div>
+
+<p> After some work, we turned our research into a paper and submitted it to the International Symposium of Academic Makerspaces. We traveled to Yale and presented at a poster session, receiving a variety of interest from both makerspace owners and professors interested in our approach. </p>
+
 </body>
 </html>

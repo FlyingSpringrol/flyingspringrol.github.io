@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <style>  
+  div.padded {  
+    padding-top: 0px;  
+    padding-right: 100px;  
+    padding-bottom: 0.25in;  
+    padding-left: 100px;  
+  }  
+  body {
+  padding: 100px;
+  margin: auto;
+  text-align: left;
+  font-weight: 300;
+  font-family: 'Crimson Text', serif;
+  color: #121212;
+  }
+  h1, h2, h3, h4 {
+  font-family: 'Crimson Text', serif;
+  }
+  </style> 
+<title>BAMPFA AR</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">The two years building an AR art exhibit</h1>
+<h3 align = "middle"> and the design lessons I took away.</h3>
+<p align= "middle">
+<a align = "middle" href="https://bampfa.org/program/bampfa-ar-augmented-time">Link to the Museum Project Page</a>
+</p>
+<br/>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap4/bampfaWideShot.png" align="middle" width="100%"/>
+            </td>
+          </tr>
+    </table>
+</div>
+
+<h3>TLDR: General design principles for mobile AR</h3>
+<ul> 
+  <li>Design your experience around drifting models, (more details below).</li>
+ <li> iPads are heavy: more than five minutes of holding them up gets hard. </li>
+ <li> The "magical moments" of AR happen when you encourage users to move in physical space.</li>
+ <li> The most immersive AR is augmenting an existing object: use markers to create known links between the physical and digital worlds you create. </li>
+ <li> AR is still very novel, which is good and bad. Good because people are interested in it, bad because theres’ potentially a bunch of onboarding you have to do.</li>
+</ul>
+<h3> TLDR: Technical approaches we developed to solve design and development processes </h3>
+<ul> 
+  <li>
+  Build re-scans of image markers into your narrative to get users to move and experience AR as it should be. Furthermore, this allows you to  get the user to realign the model for you. </li>
+  <li> 3D scan your physical model, so you can design digital content in unity around the known locations</li>
+</ul>
+<h3> General Things I wished I had known going into the project </h3>
+<ul> 
+  <li>Do your best to understand SLAM/VIO (Simultaneous Localization and Mapping + Visual Inertial Odometry) and how these affect your AR application. Understanding basic computer vision concepts like SIFT and feature tracking is also super helpful in designing your full AR experience. </li>
+</ul>
+<p>
+  <h3> Press:</h3>
+  <ul> 
+  <li> 
+    <a href = "https://archpaper.com/2020/01/luisa-caldas-uses-ar-to-let-the-dsr-designed-bampfa-tell-its-own-story/">Archpaper Article</a>
+  </li>
+  <li>
+    <a href = "https://www.dailycal.org/2019/12/12/uc-berkeley-professor-luisa-caldas-uses-augmented-reality-to-reveal-untold-history-unheard-voices-at-bampfa/"> DailyCal Article</a>
+  </li>
+  </p>
+<p> 
+
+<h3 align = "middle"> That's it for now! </h3>
+<p> Still in the process of writing up all the details into a coherent story to inform both my future AR development work, as well as other AR devs who could benefit from the mistakes we made :).</p>
+
+</ul>
+</br>
+</body>
+</html>

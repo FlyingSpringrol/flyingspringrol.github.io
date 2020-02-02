@@ -20,16 +20,22 @@
   font-family: 'Crimson Text', serif;
   }
   </style> 
-<title>Brian's work 2</title>
+<title>Pengram AR </title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
 </head>
 
 
 <body>
-<h1 align="middle">What I did at PengramAR</h1>
+<h1 align="middle"> Building an Augmented Reality Collaborative Tool On Hololens</h1>
 <h3 align = "middle"> and the design lessons I took away.</h3>
+
+<p> Heres the video link to this final Oculus/Hololens based telepresence application.</p>
+<a href = "https://vimeo.com/306606742"> Video </a>
+
 <p> Project abstract: I led product development for my friends startup, and we would eventually a) win Microsoft's Imagine cup in 2018, b) get a research poster published at ISAM 2019, and c) turn it all into a company and get the backing of YCombinator in 2019. </p>
+
+
 <br/>
 
 <h3>TLDR: General design principles</h3>
@@ -42,24 +48,18 @@
   <li> Hololens usability is a huge issue, always consider UI learning factors, device, weight, battery length, price. Think of it as a demo tool, not a industry ready device. </li>
   <li> Key feature: Novelty of AR: it seems almost magical to the new user. </li>
 </ul>
-<h3>TLDR: General mobileAR design principles </h3>
-<ul> 
-  <li> MobileAR can be nearly frictionless, if onboarding designed correctly </li>
-  <li> For marker scanning/ using image markers: stick with a QR code. Most people already know how to scan one. </li>
-  <li> Making instructions in a 3D way removes ambiguity: This is an incredible use case </li>
-  <li> Indoor/Outdoor navigation is also an incredible use case for MobileAR. </li>
-  <li> AR itself is highly engaging: the value of engagement is as tangible as the other benefits of AR </li>
-  <li> Drawback 1: drift (AR applications will accumulate error over time), leading to instructions that float off of where they are supposed to be </li>
-  <li> Drawback 2: Occlusion: an incredibly important depth estimation cue that the brain uses: that does not exist in most AR [need mesh construction of objects].
-</li>
-  <li> Drawback 3: Shadows: another incredibly important depth estimation cue that the brain uses. AR objects will not interact with real objects.</li>
 
 </ul>
+
+
+<p> This is my favorite piece of the research, spent the most time on it, and I think it captured the state of AR instructions pretty well. </p>
+<a href = "https://drive.google.com/file/d/1R6DD5IQc9XlSzLuoQpgnt4e5ASNBpawg/view?usp=sharing"> Link to doc </a>
+
 </br>
-<h2 align="middle">Part I: Recovering Startup Addict</h2>
+<h2 align="middle">Part I: Brought on as Product Designer</h2>
 
 <p>
-  After leaving PantheonVR, and beginning my slow startup recovery process, my friend approached me with a VR/AR problem of his own.
+  After leaving PantheonVR my friend approached me with a VR/AR problem of his own.
 The startup he was working on, built out of Berkeley’s Center for Augmented Cognition, had started to have VR design issues. 
 </p>
 <p>
@@ -139,98 +139,6 @@ They also wanted me to improve their avatars, so I came up with a better design 
     </table>
 </div>
 <p> In this time, the core founding members would take the project to Microsoft's imagine cup, winning first place at U.S nationals, and going on to worlds. </p>
-<p> Heres the video link to this final Oculus/Hololens based telepresence application.</p>
-<a href = "https://vimeo.com/306606742"> Video </a>
 
-<h2 align="middle">Part II: Another pivot? </h2>
-
-<p> Although we had received a variety of good signals from Microsoft about the state of the project, it was at this point in the project when we decided to consider a pivot. We had talked to about 20 companies at this point, and had dragged out negotiations with Siemens for over 9 months. There simply was no need for our solution: nothing justified the friction of VR operation and AR viewing.
-</p>
-
-<p>
-To this day I don’t know if this was the right decision. Still, I think the signals showed that pursuing a hololens based telepresence app would hurt us in the long run. During our pivot discussions, I fought for an easier to use platform, insisting iPad and ARKit was the place to go with our product. 
-After weeks of discussion, I was given the go ahead to build a prototype of a lightweight AR application for instructional delivery.
-</p>
-<p>
-I built the first prototype for our “augmented sequence instructions.”
-</p>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/aug1.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p> The idea was that someone would be able to see instructions through their iPad, and be able to interact with the machines. 
-I used Unity3D to create the AR experience, which had a wrapper around ARKit1.5. </p>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/aug2.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/aug3.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p>Here's a video of the AR application. </p>
-<a href = "https://vimeo.com/306300401"> Video </a>
-<p> The whole pitch involved both a creation and consumption side for these instructions.
-What I had prototyped was just the “Consumption” side of the instructions, but what we really needed was the “Creation” side, to allow for the design specialists to create their own AR instructions easily, without a need for Unity or Photoshop.  </p>
-<p> The team sat down together, and I led a white boarding session. By the end, we had designed the creation side of the application. 
-I tried to boil it down to it’s absolute essentials.
-The fact you could put it onto a single page felt like we had succeeded in coming up with a simple and usable design for creation and consumption of AR instructions. </p>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/aug4.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p> We allocated work, and then started building. 
-By the end of the semester, we had an application that could easily make and deliver instructions. We delivered it to Jacobs hall and called it a day.
-</p>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/aug6.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="chap2/aug7.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p>The final video of the AR Instructions Application is <a href="https://www.youtube.com/watch?v=ysEk7nFayCI&feature=youtu.be"> here. </a></p>
-<h2 align="middle">Part III: The end. </h2>
-<p>I collected all our learnings into this research folder over the course of the nine months on the Hololens and mobileAR aspects of our project.
-It encompasses business, design, and engineering possibilities. 
-</p>
-<a href="https://drive.google.com/open?id=1JQMwZjna0CZPPSIw-nl260wlj8gNpHvp">Link to research folder</a>
-<p> This is my favorite piece of the research, spent the most time on it, and I think it captured the state of AR instructions pretty well. </p>
-<a href = "https://drive.google.com/file/d/1R6DD5IQc9XlSzLuoQpgnt4e5ASNBpawg/view?usp=sharing"> Link to doc </a>
-<p> After the semester ended, Bryce, Vedant and Lear would leave to work at Apple.
-Luke would leave for Facebook. </p>
-<p> Bill, Will, and Charles pitched the product to YC, and would be accepted. They would take the same journey I had a year prior.
-They pivoted to an indoor navigation tool. </p>
-<a href = "https://www.pengramar.com/" > https://www.pengramar.com/ </a>
-<p> 
-As for me, well, I would leave for Berlin for four months. I knew I’d regret not going. So I packed up my stuff, and left for the graffiti covered streets of Berlin.
-</p>
 </body>
 </html>
