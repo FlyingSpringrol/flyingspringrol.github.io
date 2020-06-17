@@ -30,23 +30,19 @@
 <h1 align="middle"> Building an Augmented Reality Collaborative Tool On Hololens</h1>
 <h3 align = "middle"> and the design lessons I took away.</h3>
 
-<p> Heres the video link to this final Oculus/Hololens based telepresence application.</p>
-<a href = "https://vimeo.com/306606742"> Video </a>
 
-<p> Project abstract: I led product development for my friends startup, and we would eventually a) win Microsoft's Imagine cup in 2018, b) get a research poster published at ISAM 2019, and c) turn it all into a company and get the backing of YCombinator in 2019. </p>
+<p> My friend came to me with a pretty well thought out product that he and some of his peers in the Center for Augmented Cognition had developed over the last year. In short, it was a remote telepresence application, where a user in VR would show an operator in AR how to fix a machine. The idea was a maintenance operator on an oil rig who didn't have the knowledge to fix a specific piece of equipment, could call using Pengram and an experienced operator could hop into VR and show them how to perform the necessary tasks to get it working. I was sold.  </p>
 
+ <p> In the initial stages of this project, I had more of a supplemenatry role as a UI/UX designer, but on the side spent quite a bit time doing research to validate design assumptions and figure out if we were truly solving the problem we were saying we were solving. Spoiler. We were not. </p>
 
 <br/>
 
-<h3>TLDR: General design principles</h3>
+<h3>TLDR: Things I learned </h3>
 <ul> 
-  <li> Talk to your users. Always, and constantly.</li>
-  <li> Read research papers: for example, VR/AR has been around for 60 years, and there are thousands upon thousands of experiments that have been done and published. Save yourself work. </li>
-</ul>
-<h3>TLDR: General Hololens design principles</h3>
-<ul>
-  <li> Hololens usability is a huge issue, always consider UI learning factors, device, weight, battery length, price. Think of it as a demo tool, not a industry ready device. </li>
-  <li> Key feature: Novelty of AR: it seems almost magical to the new user. </li>
+  <li> Talk to your users. Always, and constantly. When you don't do it, you'll just kind of drift away from the target problem you intended on solving. </li>
+  <li> Read research papers: for example, VR/AR has been around for 60 years, and there are thousands upon thousands of experiments that have been done and published. Save yourself work :). </li>
+  <li> Hololens usability is a huge issue, when building for it consider UI learning factors, device, weight, battery length, price. Think of it as a demo tool, not a industry ready device. </li>
+  <li> Key feature of AR seems to be novelty: it seems almost magical to the new user. </li>
 </ul>
 
 </ul>
@@ -56,37 +52,14 @@
 <a href = "https://drive.google.com/file/d/1R6DD5IQc9XlSzLuoQpgnt4e5ASNBpawg/view?usp=sharing"> Link to doc </a>
 
 </br>
-<h2 align="middle">Part I: Brought on as Product Designer</h2>
-
 <p>
-  After leaving PantheonVR my friend approached me with a VR/AR problem of his own.
-The startup he was working on, built out of Berkeley’s Center for Augmented Cognition, had started to have VR design issues. 
-</p>
-<p>
-  They needed some better interaction paradigms. I agreed: their main interaction tool was an enormous red sphere attached to a hand. 
+  While in this stage of the project, my contributions were mainly from a strategy and business angle: but I did do some visual work to polish up the user experience before some important presentations. The first thing I was brought on to do was design a virtual tool that could allow a user to grab things, but also draw. Previously, the tool had been a giant red ball attached to the persons hand, but I designed a type of wrist based hand-tool that satisfied the design constraints.
 </p>
 <div align = "middle">
         <table style="width=100%">
           <tr>
             <td>
-              <img src="chap2/hand1.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p> They need me to design a tool that would allow for several things. Not one to back down from a design challenge, especially with VR, I said yes. </p>
-<h3> The constraints were: </h3>
-<ul>
-  <li> Needed a constraint for the hand that wouldn’t impede grabbing </li>
-  <li> The tool needed to be able to draw and paint. </li>
-  <li> I designed a type of ‘hand gun’, something that would allow for both intuitive grabbing, as well as drawing, painting, and other tool use. 
-  </li>
-</ul>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/hand2.png" align="middle" width="400px"/>
+              <img src="chap2/hand.jpg" align="middle" width="100%"/>
             </td>
           </tr>
     </table>
@@ -98,47 +71,35 @@ I based this design mostly off the Oculus Medium design blog.
         <table style="width=100%">
           <tr>
             <td>
-              <img src="chap2/grid1.png" align="middle" width="400px"/>
+              <img src="chap2/grid1.png" align="middle" width="100%"/>
             </td>
           </tr>
     </table>
 </div>
 <p> 
-They also wanted me to improve their avatars, so I came up with a better design for the floating avatar.
+The original operator avatar was literally a ball with a cube stuck in it's head, so I went around to fixing that as well. Realizing we didn't have the budget to create an animated avatar with articulated eyes or a face, I decided to design one that had a headset over the eyes to avoid this issue. 
 </p>
 <div align = "middle">
         <table style="width=100%">
           <tr>
             <td>
-              <img src="chap2/operator1.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p> I added more definition to the head, and added a headset to the operator.  
-</p>
-
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/operator3.png" align="middle" width="400px"/>
-            </td>
-          </tr>
-    </table>
-</div>
-<p> I added a wireframe to the avatar, to add a more futuristic look. </p>
-
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap2/operator4.png" align="middle" width="400px"/>
+              <img src="chap2/avatar.jpg" align="middle" width="100%"/>
             </td>
           </tr>
     </table>
 </div>
 <p> In this time, the core founding members would take the project to Microsoft's imagine cup, winning first place at U.S nationals, and going on to worlds. </p>
+<p> At the same time, what really stuck out to me about the product and it's scalability was not the live telepresence aspect, which had a host of problems such as networking issues, video issues and most importantly, a need for incredibly accurate 3D models: but rather it was the app's ability to record telepresence. The promise of recording teachers and operators in a way which captured hand gestures and 3D motion was incredibly compelling to me. I spent a couple weeks building a prototype for the Lawrence Hall of Science to test out the idea. I downloaded some satellite models from the NASA website and recorded an educational series for them. I still think there was something interesting here. Alas, at the point we were making the mistake of optimizing for venture capital and awards, which definitely mislead us a bit . <a href = "https://www.youtube.com/watch?v=dJ-I3NvwaOI&feature=youtu.be"> Link to the video</a> </p>
+<p> </p>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap2/lawrence.png" align="middle" width="100%"/>
+            </td>
+          </tr>
+    </table>
+</div>
 
 </body>
 </html>
