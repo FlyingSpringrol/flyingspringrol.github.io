@@ -53,8 +53,15 @@
 			.header{
 				padding: 0;
 				margin: 0;
-				padding-bottom: 20px;
+				padding-bottom: 30px;
+				padding-left: 30px;
+				padding-right: 30px;
+				margin-top: 15px;
 				color: #333333;
+			}
+			.banner-local{
+				position: relative;
+				display: inline-block;
 			}
 			.banner-wrapper{
 				margin-left: -20px;
@@ -65,37 +72,63 @@
 				padding:0;
 				width: 5rem;
 				height: 5rem;
-				object-fit: cover;
 				border-radius: 50%;
 
 				transition: all 1s;
 				transform: scale(1);
 				z-index: 1;
 				box-shadow: 0px 0px 4px rgba(0, 0, 0, .3);
-				margin-right: -20px;
+				margin-right: -10px;
+				color: white;
+				font-size: 10%;
 
+				display: inline-block;
 			}
 			form{
 				display: flex;
 				justify-content: center;
 			}
+			.banner-txt{
+				background-color: white;
+				position: absolute;
+				bottom: 20%;
+				margin: auto;
+				border-radius: .25rem;
+				opacity: 70%;
+
+				left: 50%;
+				transform: translate(-50%, 0);
+			}
+			#b1{
+				background-image: url('neo-sm.png');
+				background-size: cover;
+				background-position: center;
+			}
 			#b2{
-				z-index: 2;
+				transform: scale(1.1);
+				background-image: url('leed-sm.png');
+				background-size: cover;
+				background-position: center;
+			}
+			#b3{
+				background-image: url('shino-sm.png');
+				background-size: cover;
+				background-position: center;
 			}
 			#b1:hover{
-				transform: scale(3);
-				z-index: 100 !important;
+				transform: scale(2);
 				box-shadow: 0px -2px 20px rgba(0, 0, 0, .3);
+				color: black;
 			}
 			#b2:hover{
-				transform: scale(3);
-				z-index: 100 !important;
+				transform: scale(2);
 				box-shadow: 0px -2px 20px rgba(0, 0, 0, .3);
+				color: black;
 			}
 			#b3:hover{
-				transform: scale(3);
-				z-index: 100 !important;
+				transform: scale(2);
 				box-shadow: 0px -2px 20px rgba(0, 0, 0, .3);
+				color: black;
 			}
 			.content{
 				position: absolute;
@@ -140,9 +173,15 @@
 					<div class = "blocks">
 						<h1 class="header"> Denizens of the Deep </h1>
 						<div class="banner-wrapper">
-							<img class="banner" id="b1" src="./shino-sm.png"></img>
-							<img class="banner" id="b2" src="./leed-sm.png"></img>
-							<img class="banner" id="b3" src="./neo-sm.png"></img>
+							<div id="b1" class="banner">
+								<div class="banner-txt">Neoceratodus</div>
+							</div>
+							<div id="b2" class="banner">
+								<div class="banner-txt">Leedichthys</div>
+							</div>
+							<div id="b3" class="banner">
+								<div class="banner-txt">Shonisaurus</div>
+							</div>
 						</div>
 
 						<p> An interactive e-book designed for kids who love paleontology: Covering the giant and not so giant monsters of the Mesozoic, Cretaceous, and Devonian. </p>
