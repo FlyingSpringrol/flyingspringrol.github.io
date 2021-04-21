@@ -40,8 +40,17 @@
 			width: 100vw;
 			height: 100vh;
 			background-image: url('./niobaraBlur.jpeg');
-			background-position: cover;
+			background-size: cover;
+
 		}
+		@media all and (max-width: 800px){
+			#myimage{
+				height: 130vh;
+				background-size: cover;
+				background-position: center;
+			}
+		}
+
 		</style>
 		<style>
 			body{
@@ -143,6 +152,13 @@
 				padding-top: 20px;
 				padding-bottom: 20px;
 			}
+			@media all and (max-width: 600px){
+				.content{
+					top: 10%;
+					width: 85vw;
+				}
+			}
+
 			input {
 				font-family: 'Montserrat', sans-serif;
 				font-size: 70%;
@@ -184,7 +200,7 @@
 							</div>
 						</div>
 
-						<p> An interactive e-book designed for kids who love paleontology: Covering the giant and not so giant monsters of the Mesozoic, Cretaceous, and Devonian. </p>
+						<p> <strong>An interactive e-book designed for kids who love paleontology</strong>: Covering the giant and not so giant monsters of the Mesozoic, Cretaceous, and Devonian. </p>
 						<p> Add your email to stay updated on the launch, set for June 2021. </p>
 						<form action="https://formspree.io/aronowb14@gmail.com" method="POST">
 						  <input type="email" name="email">
