@@ -33,7 +33,7 @@
 
 
 <p>
-  I worked for a year at the Lab At Rockwell Group, building interactive installations. It was an interesting experience for me, and I was pretty out of my comfort zone as far as design went. That being said I had a lot of fun building things for work: for example light installations at <a href="https://www.rockwellgroup.com/projects/luminaries"> Luminaries</a>, and VR prototypes for <a href = "https://www.labatrockwellgroup.com/hard-rock-oculus"> Hardrock Oculus</a>. In this post I wanted to highlight the big ideas that I thought were compelling and could lead to extensible systems and products. 
+  I worked for a year at the Lab At Rockwell Group, building interactive installations. It was an interesting experience for me, and I was pretty out of my comfort zone as far as design went. That being said I had a lot of fun building things for work: for example light installations at <a href="https://www.rockwellgroup.com/projects/luminaries"> Luminaries</a>, VR prototypes for <a href = "https://www.labatrockwellgroup.com/hard-rock-oculus"> Hardrock Oculus</a> and interactive art for 299 Park Ave.
 </p>
 
 
@@ -64,24 +64,13 @@
 </div>
 <p> The aesthetic difference between those two photos is stark, and highlights why I think studios should lean towards rendered content. The discussions we had at the Lab really came down to trading off pre-computed pieces with realtime interactivity, but I think that was a false dichotomy. I really think there is a potential future in which interactive installations use rendered content in clever ways. For interactive installations there is generally a fixed viewpoint camera: which means in theory you could precompute lighting interactions between layers, and composite in realtime. Just like in Nuke or After effects, using layers to blend layer information could let artists create stunning interactive pre-rendered pieces.  </p>
 
+<h3 align = "middle"> Idea 2: VR as an architectural visualization tool </h3>
+<p> I've always been a VR fanatic from the first time I put on an Oculus DK2. It truly does feel like a game changer for simulating physical space in the context of architecture. But technology is always adopted on an S-Curve, and we're still sitting at the start of it. For architectural projects in the LAB, whenever a creative technologist is working on them, there will be a VR previz. That being said, it was incredibly difficult to get buy-in from other conventional architecture teams. I think what will cause the exponential technology adoption of VR is every client having a VR headset to view architectural models. Only then will VR will become as necessary as renders. My boss and I got pretty good at building out VR previsualizations for our installations: simulating projection mapping, lights, and unconventional video displays.  </p>
 <div align = "middle">
         <table style="width=100%">
           <tr>
             <td>
-              <img src="chap6/compositing.png" align="middle" width="100%"/>
-              <figcaption align="middle"><i>Compositing Example using Nuke, Main Road Studios </i></figcaption>
-
-            </td>
-          </tr>
-    </table>
-</div>
-<h3 align = "middle"> Idea 2: VR Systems for Visual Art Previz </h3>
-<p> This idea was one we really pushed and succeeded at to some degree. For all the projects I worked on at my time at Rockwell, me and the senior creative technologist always spent the time to prototype our installations in Unity3D. It made designing these things much easier than it would be normally. We did try to push other studios to adopt such techniques: but architecture is a slow moving industry. People like their process, and switching costs are always huge. </p>
-<div align = "middle">
-        <table style="width=100%">
-          <tr>
-            <td>
-              <img src="chap6/hardrock.png" align="middle" width="100%"/>
+              <img src="chap6/vr1.jpg" align="middle" width="100%"/>
 
             </td>
           </tr>
@@ -91,14 +80,45 @@
         <table style="width=100%">
           <tr>
             <td>
-              <img src="chap6/brookfieldShot.png" align="middle" width="100%"/>
+              <img src="chap6/vr2.jpg" align="middle" width="100%"/>
 
             </td>
           </tr>
     </table>
 </div>
-<h3 align = "middle"> Idea 2: Custom AR Mounts for AR Museums </h3>
-<h3 align = "middle"> Idea 3: Networked VR Systems for Spatial Analytics </h3>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap6/vr3.jpg" align="middle" width="100%"/>
+
+            </td>
+          </tr>
+    </table>
+</div>
+<h3 align = "middle"> Simulating Sensor Data </h3>
+<p> The problem led to development here was that for most of our installations, depth sensors sit at distances that are hard to mock-up in the office space we had. This idea I thought synergized well with the VR previzes we had already built. Having a library of different simulated sensors could be an amazing thing for developing interactive installations. The example I got around to building was simulating LIDAR data. We also used a lot of depth sensing equipment in our installations, and simulating such data would have been a fun and interesting challenge. Having rich datasets also helped us work in spatial analytics algorithms to the simulations we had built. </p>
+<div align = "middle">
+ <div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap6/data2.jpg" align="middle" width="100%"/>
+
+            </td>
+          </tr>
+    </table>
+</div>
+<div align = "middle">
+        <table style="width=100%">
+          <tr>
+            <td>
+              <img src="chap6/data1.jpg" align="middle" width="100%"/>
+
+            </td>
+          </tr>
+    </table>
+</div> 
 
 
 </body>
