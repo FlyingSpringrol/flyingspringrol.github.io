@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            font-family: 'Roboto', sans-serif;
+            transition: opacity 1s;
+        }
+        body {
+            overscroll-behavior: none;
+        }
+
+        .fullscreen {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .fit{
+          width: 100vw;
+          height: 100vh;
+          position: absolute;
+          object-fit: cover;
+          opacity: 0;
+          filter: blur(10rem);
+          transition: opacity 2s, filter 1s;
+        }
+
+        .content-wrapper{
+          position: absolute;
+          top: 40px;
+          left: 0px;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+        .content{
+          width: 40%;
+        }
+
+        @media only screen and (max-width: 1300px) {
+          .content{
+            width: 70%;
+            }
+        }
+
+        .header{
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+        }
+        .body-wrapper{
+          padding-top: 50px;
+        }
+
+        a {
+          position: relative;
+          color: black;
+          text-decoration: none;
+          cursor:pointer;
+        }
+        a{
+          transition: all 1s;
+        }
+
+        a:hover {
+          color: black;
+        }
+        a::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: black;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      a:hover::before {
+        transform: scaleX(1);
+      }
+
+      .about-underline {
+          position: relative;
+          color: black;
+          text-decoration: none;
+        }
+      .about-underline::before{
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: black;
+        transform: scaleX(1);
+        transition: transform 0.3s ease;
+      }
+
+    </style>
+</head>
+<body id="body-id">
+    <div class="fullscreen">
+        <img src="./cover2-lowres.jpg" class="fit" id="bg-img"/>
+    </div>
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="header">
+          <a href="./index.html?scrollBottom=true" onClick="onHrefClick(event)">
+            home
+          </a>
+          <div class="about-underline">
+            about
+          </div>
+        </div>
+        <div class="body-wrapper">
+          <p>
+            I grew up in norcal, went to Berkeley for computer science (go bears!), and now reside in Los Angeles, California.
+          </p>
+          <p>
+            I love design but at heart, I am an engineer. I love writing code, reading code, and designing systems.
+          </p>
+          <p>
+            It’s been about 3 years of professional software engineering, and my favorite days are the days I can just sit down and program.
+          </p>
+          <p>
+            I think it took me a while to figure that out: I had bounced around thinking I wanted to be a founder, or a PM, or a product designer, but the truth is engineering makes me very happy. (Thank you authors of Designing Your Life).
+          </p>
+          <p>
+            Professional personality wise I strive to be an engineer that other people like working with. I value collaboration, clear communication, and strive to avoid over-engineering things.
+          </p>
+        </div>
+      </div>
+    </div>
+
+</body>
+<script>
+var image1 = new Image();
+
+var image2 = new Image();
+//load low res, blur it,
+image1.onload = function () {
+  //actual code here
+  document.getElementById('bg-img').setAttribute('src', image1.src);
+  document.getElementById('bg-img').style.filter = "blur(10rem)"
+  document.getElementById("body-id").style.opacity = 1;
+  document.getElementById('bg-img').style.opacity = 1;
+  image2.src = './cover-highres.jpg';
+};
+
+//unblur, go to high res.
+image2.onload = function(){
+  document.getElementById('bg-img').style.filter = "blur(0)"
+  document.getElementById('bg-img').setAttribute('src', image2.src);
+}
+
+image1.src = './cover-lowres.jpg'
+
+
+
+</script>
+
+<script>
+  function onHrefClick(e){
+    document.getElementById("body-id").style.opacity = 0;
+    setTimeout(()=>{
+      window.location = e.srcElement.href;
+    }, 1000)
+    e.preventDefault()
+    return false;
+  }
+</script>
+</html>

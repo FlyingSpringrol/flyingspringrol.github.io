@@ -1,115 +1,325 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Brian Aronowitz</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
- 		<link rel="shortcut icon" type="image/x-icon" href="./favicon/favicon.ico">
-		<link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
-		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="./favicon/coffee-cup-silhouette-optimized-152-238538.png">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brian Aronowitz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        body {
+            overscroll-behavior: none;
+        }
 
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="./favicon/coffee-cup-silhouette-optimized-144-238538.png">
+        .fullscreen {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .fit{
+          width: 100vw;
+          position: absolute;
+          filter: blur(10rem);
+          transition: filter 1s;
 
-		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="./favicon/coffee-cup-silhouette-optimized-120-238538.png">
+        }
+        .content{
+          width: 100%;
+          position: absolute;
+          z-index:2;
+        }
+        .text-content{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          position: relative;
+          font-size: 12px;
+        }
+        :root {
+          --percentage: 0;
+        }
+        .p1{
+          position: absolute;
+          top: 50vh;
+          opacity: 1;
+          opacity: var(--percentage);
+        }
+        .p2{
+          position: absolute;
+          top: 150vh;
+          opacity: var(--percentage);
+        }
+        .p3{
+          position: absolute;
+          top: 250vh;
+          padding-bottom: 100vh;
+          opacity: var(--percentage);
+        }
+        .bottom-section{
+          width: 100%;
+          position: fixed;
+          bottom: 50px;
+          left: 0px;
+          display: flex;
+          justify-content: center;
+          z-index: 10;
+        }
+        .link-wrapper{
+          width: 200px;
+          display: flex;
+          justify-content: space-around;
+        }
 
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="./favicon/coffee-cup-silhouette-optimized-114-238538.png">
+        a {
+          position: relative;
+          color: white;
+          text-decoration: none;
+          opacity: 0%;
+        }
+        a{
+          transition: all 1s;
+        }
 
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="./favicon/coffee-cup-silhouette-optimized-72-238538.png">
+        a:hover {
+          color: white;
+        }
+        a::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      a:hover::before {
+        transform: scaleX(1);
+      }
 
-		<link rel="apple-touch-icon-precomposed" href="./favicon/coffee-cup-silhouette-optimized-57-238538.png">
+      .norm-link{
+        opacity: 1;
+      }
 
-		<link rel="icon" href="/favicon/coffee-cup-silhouette-optimized-32-238538.png" sizes="32x32">
-		<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
-			<style> 
-			body{
-				font-family: 'PT Serif', serif;
-			}
-			.content{
-				padding: 10%;
+      @media (max-width: 600px) {
+          h1 {
+            font-size: 22px;
+            padding: 10px;
+          }
+        }
 
-			}
-			.blocks{
-				padding-top: 4%;
-			}
-			img{
-				width: 100px;
-				height: 100px;
-				z-index: 10;
-			}
-		</style>
-	</head>
+    </style>
+</head>
+<body id="body-id">
+    <div class="fullscreen">
+        <img src="" class="fit" id="bg-img"/>
+    </div>
+    <!-- <audio autoplay>
+      <source src="./lake.mp3" type="audio/mpeg">
+    </audio> -->
+    <div class="content">
+      <div class="text-content">
+        <!-- Your content goes here -->
+        <h1 class="p1" id="p1">Hello, I'm Brian.</h1>
+        <h1 class="p2" id="p2"> I've built products at <a class="norm-link" href="https://junilearning.com/">Juni learning</a> and <a class="norm-link"  href="https://o-p-e-n.com/">open</a>, and programmed graphics at <a class="norm-link"  href="https://www.rockwellgroup.com/lab">the rockwell group</a></h1>
+          <h1 class="p3" id="p3">
+            welcome to my website  <br/> read more below or just stay and enjoy the view
+          </h1>
+      </div>
+    </div>
+    <div class="bottom-section" id="bottom-section">
+      <div class="link-wrapper">
+        <a href="./about.html" id="c2" onclick="onHrefClick(event)">
+          about
+        </a>
+        <a href="https://www.linkedin.com/in/brian-aronowitz/" id="c3">
+          linkedin
+        </a>
+      </div>
+    </div>
+    <div>
 
-	<body>
-	      <div class = "content">
-				<div>
-					<img src="./me.png"/>
-					<h1> Hello, my name is Brian. </h1>
-				</div>
+    </div>
+</body>
+<script>
 
-				<div> 
-					<br/>
-					I'm a designer and computer scientist. I'm passionate about education, software engineering, and art. I currently work as a software engineer at the edtech company Juni Learning. 
-				</div>
 
-				<div> 
-					<br/>
-					At heart I am a software engineer. I love writing code. I read constantly on how to improve: my favorite recent books/courses have been 
-					Designing Data Intensive Applications, HTML/CSS on Udemy, Clean Code, The Effective Engineer, and The Senior Engineer. 
-					<br/>
-					<br/>
-					I love reading about business + design as well. Founders at Work, The Design of Everyday Things, Peopleware, and The Innovators Dilemma have been my favorites there.
-				</div>
 
-				<div> 
-					<br/>
-					Random aside: I did not intend this but over the years I've had some success in the art world. I'm not 100% why/when this happened but I think it's because I just like making things with cool people :). I've found that's led to some really awesome outcomes.
-					My work has been exhibited at <a href="https://bampfa.org/program/bampfa-ar-augmented-time">BAMPFA</a>, <a href="https://viira.io">Art Basel</a>, <a href="https://www.asmakazmi.com/urban-forest">Oh Bay Cultural Park</a>, <a href = "./cs194/proj6/Neural Style Transfer for So Long, and Thanks for all the Compute.htm">The Ivy Film Festival</a> and <a href="https://www.labatrockwellgroup.com/299parkave">299 Park Avenue</a>.
-				</div>
-				<div class = "blocks">
-					<h3> Work </h3>
-					<p>
-						<a href = "./stories/chap6.html"> Creative Technology @ Rockwell Group </a> - Variety of Technologies (2020)
-					</p> 
-					<p>
-						<a href = "./stories/chap5.html"> Science and History Visualizations </a> - Product Design (2020)
-					</p> 
-					<p>
-						<a href = "./stories/chap4.html"> Augmented Reality Research Project (Under Professor Luisa Caldas) </a> - XR Research Engineer (2019)
-					</p>
-					<p>
-						<a href = "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2019/EECS-2019-170.pdf"> Undergraduate Research Paper (Under Professor Carlo Sequin) </a> - Geometric modifications on a Möbius Torus to create a walkable structure. <b> Python, hashmaps, 3D geometry.</b>
-					</p>
-					<p>
-						<a href = "./cs194/proj6/Neural Style Transfer for So Long, and Thanks for all the Compute.htm"> CS194 final project </a> - Neural style transfer on 360 film. <b> Neural networks, GPU rendering, 360 film</b>
-					</p>
-					<p>
-						<a href = "https://flyingspringrol.github.io/cs184/proj5/finalReport.html"> CS184 Final project </a> - OpenCV interaction designs combined with efficient OpenGL meta-ball shader. <b>GLSL, OpenCV, C++ </b>
-					</p>
-					<p>
-						<a href = "https://flyingspringrol.github.io/CS160-p3-cycleIII/"> CS160 Art Project </a> - A 200 line piece of javascript using Gaussians and pixel blending to composite images. </a>  <b> Javascript </b>
-					</p>
-					<p>
-						<a href = "./stories/chap3.html">PengramAR (mobileAR version): Funded by YCombinator 2019</a> - lead product designer. (2018)
-					</p>					<p>
-						<a href = "./stories/chap2.html">PengramAR- Winner of US Microsoft Imagine Cup 2018</a> - XR designer. (2018)
-					</p>
-					<p>
-						<a href = "./stories/chap1.html">PantheonVR (funded by YCombinator) </a> - cofounder / product designer. (2017)
-					</p>
-				</div>
+  var p1 = document.getElementById("p1")
+  var p2 = document.getElementById("p2")
+  var p3 = document.getElementById("p3")
 
-				<div class = "blocks">
-					<p> Contact me @ <b> aronowb14@gmail.com </b></p>
-				</div>
-				<br/>
-				<br/>
-				<br/>
-				<div class = "blocks"> 
-					<a href = "./roomofreq.html"> The Room of Requirement</a>
-				</div>
-			</div>
-	</body>
+
+  var p3 = document.getElementById("p3")
+
+var c1 = document.getElementById("c1")
+var c2 = document.getElementById("c2")
+var c3 = document.getElementById("c3")
+
+  var img = document.getElementById("bg-img")
+  p1.style.setProperty("--percentage", 1.0);
+
+  let ratio = window.innerHeight / window.innerWidth; //aspect ratio
+    let minRatio = 5824 / 3264;
+    let bgMax;
+    if (ratio > minRatio){
+      //doesn't accomodate scroll
+      document.getElementById("bg-img").style.height = "100vh"
+      bgMax = 0;
+    }
+
+    var qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+        var p=a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+})(window.location.search.substr(1).split('&'));
+
+if (qs['scrollBottom']){
+  window.scrollTo(0,10000);
+}
+
+  document.addEventListener("scroll", (e) => {
+    let scrolled =
+      document.documentElement.scrollTop /
+      (document.documentElement.scrollHeight -
+        document.documentElement.clientHeight);
+      let nms = scrolled;
+
+    //bg image
+    //should be function of width, inverse related
+    let ratio = window.innerHeight / window.innerWidth; //aspect ratio
+    let minRatio = 5824 / 3264;
+    let bgMax;
+    if (ratio > minRatio){
+      //doesn't accomodate scroll
+      document.getElementById("bg-img").style.height = "100vh"
+      bgMax = 0;
+    }
+    else if (ratio > 1){
+      //mobile
+      bgMax = -(window.innerWidth / 10);
+    }
+    else{
+      // desktop
+      bgMax = -window.innerHeight * ((1 / ratio) / 1.3);
+    }
+
+    img.style.top = `${bgMax* scrolled}px`;
+
+      //hold
+      if (nms < .1){
+        p1.style.setProperty("--percentage", 1);
+      }
+      //fade out
+      else if (nms > .1 && nms < .2){
+        const p1Diff = (.2 - nms) / .1
+        p1.style.setProperty("--percentage", p1Diff);
+      }
+
+
+      if (nms <= .31){
+        p2.style.setProperty("--percentage",  0);
+
+      }
+      //fade in
+      else if (nms > .31 && nms < .38){
+        const p2Diff = ((nms - .31) / .7)
+        p2.style.setProperty("--percentage",  p2Diff);
+      }
+      //hold
+      else if (nms > .38 && nms < .42){
+        p2.style.setProperty("--percentage", 1);
+      }
+      //fade out
+      else if (nms > .42 && nms < .54 ){
+        const p2Diff = (1.0 - (nms - .42) / (.54 - .42))
+        p2.style.setProperty("--percentage",  p2Diff);
+
+      }
+
+      if (nms <= .64){
+        p3.style.setProperty("--percentage",  0);
+      }
+      //fade in
+      else if (nms > .64 && nms < .71){
+        const p3Diff = ((nms - .64) / .7)
+        p3.style.setProperty("--percentage",  p3Diff);
+      }
+      //hold
+      else if (nms > .71 && nms < .78){
+        p3.style.setProperty("--percentage", 1);
+      }
+      //fade out
+      else if (nms > .78 && nms < .84 ){
+        const p3Diff = (1.0 - (nms - .78) / (.84 - .78))
+        p3.style.setProperty("--percentage",  p3Diff);
+      }
+      else if (nms > .84 ){
+        p3.style.setProperty("--percentage",  0);
+        //reached bottom, fade in bottom parts
+        //c1.style.opacity = 1;
+        c2.style.opacity = 2;
+        c3.style.opacity = 3;
+      }
+
+
+
+  });
+</script>
+<script>
+
+var image1 = new Image();
+
+var image2 = new Image();
+//load low res, blur it,
+image1.onload = function () {
+  //actual code here
+  document.getElementById('bg-img').setAttribute('src', image1.src);
+  document.getElementById('bg-img').style.filter = "blur(10rem)"
+  document.getElementById("body-id").style.opacity = 1;
+  image2.src = './cover2-highres.jpg';
+};
+
+//unblur, go to high res.
+image2.onload = function(){
+  document.getElementById('bg-img').style.filter = "blur(0)"
+  document.getElementById('bg-img').setAttribute('src', image2.src);
+}
+
+image1.src = './cover2-lowres.jpg'
+
+
+</script>
+<script>
+  //fading out the page
+  function onHrefClick(e){
+    document.getElementById("body-id").style.opacity = 0;
+    setTimeout(()=>{
+      window.location = e.srcElement.href;
+    }, 1000)
+    e.preventDefault()
+    return false;
+  }
+</script>
 </html>
